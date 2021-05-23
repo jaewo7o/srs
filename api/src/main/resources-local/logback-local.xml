@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+
+<configuration>
+
+    <!-- TEXT_CONSOLE 어펜더 정의 -->
+    <!-- 로컬 개발 환경에 적합 -->
+    <appender name="TEXT_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.jaewoo.srs" level="debug"/>
+
+    <!-- INFO 레벨 이하 로그는 TEXT_FILE 어펜더로 로그 적재 -->
+    <root level="INFO">
+        <appender-ref ref="TEXT_CONSOLE"/>
+    </root>
+
+</configuration>

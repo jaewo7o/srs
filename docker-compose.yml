@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+    redis:
+        container_name: redis
+        image: redis:latest
+        ports:
+            - 6379:6379
+        networks:
+            - srs-network
+        restart: always
+    database:
+        container_name: mariadb
+        image: mariadb:10
+        ports:
+            - 3306:3306
+        volumes:
+            - ../database/conf.d:/etc/mysql/conf.d
+            - ../database/data:/var/lib/mysql
+            - ../database/initdb.d:/docker-entrypoint-initdb.d
+        environment:
+            TZ: Asia/Seoul
+            MYSQL_HOST: localhost
+            MYSQL_PORT: 3306
+            MYSQL_ROOT_PASSWORD: mariadb
+            MYSQL_DATABASE: srs
+            MYSQL_USER: srs
+            MYSQL_PASSWORD: srs123!!
+        networks:
+            - srs-network
+        restart: always
+
+    application:
+        container_name: srs-backend
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            DB_ADDRESS: mariadb
+            DB_DATABASE: srs
+            DB_USERNAME: srs
+            DB_PASSWORD: srs123!!
+        ports:
+            - 9080:8080
+        depends_on:
+            - database
+        networks:
+            - srs-network
+
+networks:
+    srs-network:
