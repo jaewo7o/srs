@@ -1,1 +1,1 @@
-rootProject.name = "srs-backend"
+rootProject.name = "srs-api"
