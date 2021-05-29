@@ -4,12 +4,14 @@ import com.jaewoo.srs.common.message.service.MessageService
 import com.jaewoo.srs.core.exception.SrsDataNotFoundException
 import com.jaewoo.srs.core.exception.SrsRuntimeException
 import com.jaewoo.srs.core.logging.Log
+import com.jaewoo.srs.core.web.response.*
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindException
-import org.springframework.web.bind.MethodArgumentNotValidException
+import org.springframework.validation.BindingResult
+import org.springframework.validation.FieldError
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -27,18 +29,10 @@ class GlobalExceptionHandler(
 ) {
     companion object : Log
 
-    @ExceptionHandler(value = [BindException::class, MethodArgumentNotValidException::class])
+    @ExceptionHandler(value = [BindException::class])
     @ResponseBody
-    fun handleMethodArgumentNotValidException(ex: Exception): ResponseEntity<*> {
-
-        var errorMessage: String? = null
-        if (ex is BindException) {
-            errorMessage = ex.bindingResult.allErrors[0].defaultMessage
-        } else if (ex is MethodArgumentNotValidException) {
-            errorMessage = ex.bindingResult.allErrors[0].defaultMessage
-        }
-
-        return ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST)
+    fun handleBindException(ex: BindException): ResponseEntity<BindErrorResponse> {
+        return buildBindErrorResponse(HttpStatus.BAD_REQUEST, "Request Binding Exception", ex.bindingResult)
     }
 
     @ExceptionHandler(value = [SrsRuntimeException::class])
@@ -95,6 +89,27 @@ class GlobalExceptionHandler(
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Generic internal error", e)
     }
 
+    private fun buildBindErrorResponse(
+        status: HttpStatus,
+        message: String,
+        bindResult: BindingResult
+    ): ResponseEntity<BindErrorResponse> {
+
+        val fieldErrors = bindResult.allErrors
+                .map {
+                    BindErrorField(
+                        fieldName = (it as FieldError).field,
+                        errorMessage = it.defaultMessage!!,
+                        bindValue = it.rejectedValue
+                     )
+                }.toList()
+
+        val errorResponse = BindErrorResponse()
+        errorResponse.error = BindErrorDetail(status, message, fieldErrors)
+
+        return ResponseEntity(errorResponse, status)
+    }
+
     private fun buildErrorResponse(
         status: HttpStatus,
         message: String,
@@ -106,9 +121,6 @@ class GlobalExceptionHandler(
         e.printStackTrace(pw)
         val stackTrace = sw.toString()
 
-        // example: logging the stack trace
-        // log.debug(stackTrace)
-
         // profile base stack trace message include or not logic
         val stackTraceMessage =
             when (activeProfile) {
@@ -116,6 +128,9 @@ class GlobalExceptionHandler(
                 else -> stackTrace // default behavior
             }
 
-        return ResponseEntity(ErrorResponse(status, message, stackTraceMessage), status)
+        val errorResponse = ErrorResponse()
+        errorResponse.error = ErrorDetail(status, message, stackTraceMessage)
+
+        return ResponseEntity(errorResponse, status)
     }
 }
