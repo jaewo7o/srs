@@ -51,7 +51,7 @@ internal class MessageApiControllerTest(
         // given
         val saveMessage = save(buildMessage())
         var dto = UpdateMessageRequest(
-            id = saveMessage.id!!,
+            key = saveMessage.key,
             contentsKo = saveMessage.contentsKo + "수정",
             contentsEn = saveMessage.contentsEn + "Modify"
         )

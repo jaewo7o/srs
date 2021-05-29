@@ -29,8 +29,6 @@ data class CreateMessageRequest(
 
 @ApiModel(value = "다국어메시지 수정 DTO")
 data class UpdateMessageRequest(
-    @ApiModelProperty(value = "다국어ID", hidden = true)
-    var id: Long,
     @ApiModelProperty(value = "다국어키", required = true, example = "add")
     @field:NotBlank
     val key: String,
@@ -40,7 +38,10 @@ data class UpdateMessageRequest(
     @ApiModelProperty(value = "영문", required = true, example = "Add")
     @field:NotBlank
     val contentsEn: String
-)
+) {
+    @ApiModelProperty(value = "다국어ID", hidden = true)
+    var id: Long = 0
+}
 
 @ApiModel(value = "다국어메시지 검색 DTO")
 data class SearchMessageRequest(
