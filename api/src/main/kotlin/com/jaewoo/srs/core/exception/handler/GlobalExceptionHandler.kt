@@ -16,13 +16,14 @@ import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.client.HttpClientErrorException
 import java.io.PrintWriter
 import java.io.StringWriter
 import javax.persistence.EntityNotFoundException
 import javax.persistence.NoResultException
 
-@ControllerAdvice
+@RestControllerAdvice
 class GlobalExceptionHandler(
     @Value("\${spring.profiles.active}") private val activeProfile: String,
     private val messageService: MessageService
@@ -30,13 +31,11 @@ class GlobalExceptionHandler(
     companion object : Log
 
     @ExceptionHandler(value = [BindException::class])
-    @ResponseBody
     fun handleBindException(ex: BindException): ResponseEntity<BindErrorResponse> {
         return buildBindErrorResponse(HttpStatus.BAD_REQUEST, "Request Binding Exception", ex.bindingResult)
     }
 
     @ExceptionHandler(value = [SrsRuntimeException::class])
-    @ResponseBody
     fun handleSrsRuntimeException(ex: SrsRuntimeException): ResponseEntity<*> {
         val exceptionMessage = messageService.resolveMessage(ex.key)
         return buildErrorResponse(HttpStatus.NOT_ACCEPTABLE, exceptionMessage, ex)
@@ -76,7 +75,6 @@ class GlobalExceptionHandler(
     }
 
     @ExceptionHandler(value = [SrsDataNotFoundException::class])
-    @ResponseBody
     fun handleSrsDataNotFoundException(ex: Exception): ResponseEntity<*> {
         return buildErrorResponse(HttpStatus.NOT_FOUND, "Data not found exception", ex)
     }
