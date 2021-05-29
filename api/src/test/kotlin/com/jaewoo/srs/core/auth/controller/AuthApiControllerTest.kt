@@ -15,23 +15,6 @@ internal class AuthApiControllerTest(
 
     @Transactional
     @Test
-    fun `회원가입 테스트`() {
-        // given
-        val dto = buildCreateUserRequest()
-
-        // when & then
-        mockMvc.post("/api/signup") {
-            contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(dto)
-        }.andDo {
-            print()
-        }.andExpect {
-            status { isOk() }
-        }
-    }
-
-    @Transactional
-    @Test
     fun `ID,PW 로그인 성공 테스트`() {
         // given
         val dto = buildCreateUserRequest()

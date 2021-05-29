@@ -44,7 +44,7 @@ class SecurityConfig(
             .and()
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-            .antMatchers("/*/signin", "/*/signup").permitAll()
+            .antMatchers("/*/signin", "/api/anonymous/**").permitAll()
             // swagger 예외처리
             .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
             .antMatchers("/api/**").authenticated()

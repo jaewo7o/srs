@@ -1,6 +1,5 @@
 import http from '@/api/http'
 
 export function signUp(form) {
-    console.log('fundtion ===>')
-    return http.post('/signup', form)
+    return http.post('/anonymous/users', form)
 }

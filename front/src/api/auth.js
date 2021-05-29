@@ -8,6 +8,6 @@ export async function login({ loginId, password }) {
 }
 
 export async function reissueAccessToken() {
-    const response = await http.post('/reissueAccessToken')
+    const response = await http.post('/reissue-token')
     localStorage.setItem('accessToken', response.data.accessToken)
 }

@@ -71,6 +71,8 @@ dependencies {
     // Swagger (API Document)
     implementation("io.springfox:springfox-boot-starter:$swaggerVersion")
     implementation("io.springfox:springfox-swagger-ui:$swaggerVersion")
+    implementation("io.swagger:swagger-annotations:1.6.2")
+    implementation("io.swagger:swagger-models:1.6.2")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
@@ -109,53 +111,6 @@ tasks.bootJar {
     layered {
         isEnabled = false
     }
-}
-
-//task<Copy>("unpack") {
-//    val bootJar = tasks.getByName<BootJar>("bootJar")
-//    dependsOn(bootJar)
-//    from(zipTree(bootJar.outputs.files.singleFile))
-//    into("build/dependency")
-//}
-//
-//docker {
-//    val archiveBaseName = tasks.getByName<BootJar>("bootJar").archiveBaseName.get()
-//    name = "${project.group}/$archiveBaseName"
-//    copySpec.from(tasks.getByName<Copy>("unpack").outputs).into("dependency")
-//    buildArgs(mapOf("DEPENDENCY" to "dependency"))
-//}
-
-// Gradle Docker plugin configuration
-// Please make sure you login to Docker registry before running Docker related tasks
-docker {
-    // All the build process should be passed before we run Docker related tasks
-    dependsOn(tasks.getByName("build"))
-
-    val bootJar: BootJar by tasks
-    val archiveBaseName = bootJar.archiveBaseName.get()
-
-    // Please specify the image metadata here
-    name = "${project.group}/$archiveBaseName:${project.version}"
-
-    // Please add the tags if you need more registries/userNames/tags.
-    // Accordingly this plugin will create a corresponding task to tag/push it.
-    //
-    // By default, the registry to which it will push when you run "dockerPush" task is "docker.io".
-    // So practically the following are not needed.
-    //
-    // val registry = "docker.io"
-    // tag("DockerIO", "$registry/$name")
-
-    // Set the path to Dockerfile
-    setDockerfile(file("Dockerfile"))
-
-    // Add the built jar file to Docker's build context
-    files(bootJar.archiveFile)
-
-    // Set buildArgs of Dockerfile
-    buildArgs(mapOf(
-        "JAR_FILE" to bootJar.archiveFileName.get()
-    ))
 }
 
 tasks.withType<Test> {

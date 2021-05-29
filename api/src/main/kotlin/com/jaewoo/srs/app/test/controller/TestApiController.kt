@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 
-@Api(value = "Test Rest API")
+@Api(value = "Test Rest API", hidden = true)
 @RestController
 class TestApiController {
 

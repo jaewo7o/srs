@@ -10,6 +10,8 @@ import com.jaewoo.srs.common.auth.domain.entity.RefreshToken
 import com.jaewoo.srs.common.auth.service.AuthService
 import com.jaewoo.srs.common.auth.service.TokenService
 import com.jaewoo.srs.core.config.jwt.JwtTokenProvider
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,17 +19,15 @@ import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
 
+@Api(value = "Authentication REST API")
 @RestController
 @RequestMapping("/api")
 class AuthApiController(
-    private val userService: UserService,
     private val authService: AuthService,
     private val tokenService: TokenService,
     private val jwtTokenProvider: JwtTokenProvider
 ) {
-    @PostMapping("/signup")
-    fun signup(@Valid @RequestBody dto: CreateUserRequest) = userService.createUser(dto)
-
+    @ApiOperation(value="로그인", notes = "사용자 로그인 인증 처리")
     @PostMapping("/signin")
     fun signin(
         @Valid @RequestBody dto: LoginRequest
@@ -54,7 +54,8 @@ class AuthApiController(
         )
     }
 
-    @PostMapping("/reissueAccessToken")
+    @ApiOperation(value="토큰재발행", notes = "Access Token이 만료된 경우 Refresh Token을 사용해서 Access Token을 재발행한다.")
+    @PostMapping("/reissue-token")
     fun reissueToken(request: HttpServletRequest): Token {
         var accessToken = ""
 
