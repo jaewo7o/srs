@@ -9,7 +9,10 @@ import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
-@Api(value = "사용자관리 REST API")
+@Api(
+    tags = ["User"],
+    description = "사용자관리"
+)
 @RestController
 class UserApiController(
     private val userService: UserService

@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
 
-@Api(value = "Authentication REST API")
+@Api(
+    tags = ["Authentication"],
+    description = "사용자 인증 및 토큰재발급"
+)
 @RestController
 @RequestMapping("/api")
 class AuthApiController(

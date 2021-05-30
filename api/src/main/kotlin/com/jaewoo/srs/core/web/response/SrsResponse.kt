@@ -1,6 +1,11 @@
 package com.jaewoo.srs.core.web.response
 
-class SrsResponse {
-    val isSuccess = true
-    lateinit var data : ErrorDetail
+import com.fasterxml.jackson.annotation.JsonFormat
+import org.springframework.http.HttpStatus
+import java.time.LocalDateTime
+
+class SrsResponse(
+    status: HttpStatus,
+    val data: Any?
+) : ResponseWrapper(status) {
 }

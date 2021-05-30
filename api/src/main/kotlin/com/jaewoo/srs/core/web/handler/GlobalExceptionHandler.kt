@@ -1,4 +1,4 @@
-package com.jaewoo.srs.core.exception.handler
+package com.jaewoo.srs.core.web.handler
 
 import com.jaewoo.srs.common.message.service.MessageService
 import com.jaewoo.srs.core.exception.SrsDataNotFoundException
@@ -13,9 +13,7 @@ import org.springframework.validation.BindException
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MissingServletRequestParameterException
-import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.client.HttpClientErrorException
 import java.io.PrintWriter
@@ -32,6 +30,7 @@ class GlobalExceptionHandler(
 
     @ExceptionHandler(value = [BindException::class])
     fun handleBindException(ex: BindException): ResponseEntity<BindErrorResponse> {
+        println("========> BAD REQUEST")
         return buildBindErrorResponse(HttpStatus.BAD_REQUEST, "Request Binding Exception", ex.bindingResult)
     }
 
@@ -102,9 +101,7 @@ class GlobalExceptionHandler(
                      )
                 }.toList()
 
-        val errorResponse = BindErrorResponse()
-        errorResponse.error = BindErrorDetail(status, message, fieldErrors)
-
+        val errorResponse = BindErrorResponse(status, BindErrorDetail(message, fieldErrors))
         return ResponseEntity(errorResponse, status)
     }
 
@@ -126,9 +123,7 @@ class GlobalExceptionHandler(
                 else -> stackTrace // default behavior
             }
 
-        val errorResponse = ErrorResponse()
-        errorResponse.error = ErrorDetail(status, message, stackTraceMessage)
-
+        val errorResponse = ErrorResponse(status, ErrorDetail(message, stackTraceMessage))
         return ResponseEntity(errorResponse, status)
     }
 }

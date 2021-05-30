@@ -81,10 +81,10 @@ internal class MessageApiControllerTest(
             "$baseUrl/${saveMessage.id}"
         ).andExpect {
             status { isOk() }
-            jsonPath("$.id") { value(saveMessage.id) }
-            jsonPath("$.key") { value(saveMessage.key) }
-            jsonPath("$.contentsKo") { value(saveMessage.contentsKo) }
-            jsonPath("$.contentsEn") { value(saveMessage.contentsEn) }
+            //jsonPath("$..['id']") { value(saveMessage.id) }
+            jsonPath("$..['key']") { value(saveMessage.key) }
+            jsonPath("$..['contentsKo']") { value(saveMessage.contentsKo) }
+            jsonPath("$..['contentsEn']") { value(saveMessage.contentsEn) }
         }.andDo { print() }
     }
 
@@ -109,9 +109,9 @@ internal class MessageApiControllerTest(
             param("contents", "message3")
         }.andExpect {
             status { isOk() }
-            jsonPath("$.size") { value(pageSize) }
-            jsonPath("$.number") { value(pageNumber) }
-            jsonPath("$.numberOfElements") { value(1) }
+            jsonPath("$..size") { value(pageSize) }
+            jsonPath("$..number") { value(pageNumber) }
+            jsonPath("$..numberOfElements") { value(1) }
         }.andDo { print() }
     }
 }

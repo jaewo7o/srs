@@ -30,18 +30,11 @@ internal class AuthApiControllerTest(
             content = objectMapper.writeValueAsString(LoginRequest(dto.loginId, dto.password))
         }.andExpect {
             status { isOk() }
-//            cookie {
-//                exists("accessToken")
-//                exists("refreshToken")
-//            }
-            jsonPath("$.token.accessToken") {
+            jsonPath("$..['accessToken']") {
                 isNotEmpty()
             }
-            jsonPath("$.token.refreshToken") {
+            jsonPath("$..['refreshToken']") {
                 isNotEmpty()
-            }
-            jsonPath("$.user.name") {
-                value(dto.name)
             }
 
         }.andDo { print() }

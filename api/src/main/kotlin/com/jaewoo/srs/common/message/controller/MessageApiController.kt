@@ -12,7 +12,10 @@ import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
-@Api(value = "다국어메지시 REST API")
+@Api(
+    tags = ["Message"],
+    description = "다국어메시지관리"
+)
 @RestController
 @RequestMapping("/api/messages")
 class MessageApiController(
