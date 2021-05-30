@@ -31,6 +31,7 @@ services:
 
     application:
         container_name: srs-api
+        image: srs-api:0.0.6
         build:
             context: ./api
             dockerfile: Dockerfile
@@ -42,6 +43,7 @@ services:
             DB_PASSWORD: srs123!!
             REDIS_HOST: redis
             REDIS_PORT: 6379
+            SPRING_PROFILES_ACTIVE: dev
         ports:
             - 9080:8080
         depends_on:
