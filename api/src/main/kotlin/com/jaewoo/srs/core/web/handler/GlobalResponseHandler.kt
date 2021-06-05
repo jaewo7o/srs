@@ -26,7 +26,15 @@ class GlobalResponseHandler : ResponseBodyAdvice<Any?> {
         selectedConverterType: Class<out HttpMessageConverter<*>>,
         request: ServerHttpRequest,
         response: ServerHttpResponse
-    ): ResponseEntity<ResponseWrapper> {
+    ): Any {
+        if (body == null) {
+            return ""
+        }
+
+        if (!selectedContentType.includes(MediaType.APPLICATION_JSON)) {
+            return body
+        }
+
         if (body is ResponseWrapper) {
             return ResponseEntity(body, body.status)
         } else {
