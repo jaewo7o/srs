@@ -16,6 +16,7 @@ class Message(
     var contentsEn: String
 ) : BaseEntity() {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "message_id")
     var id: Long? = null
 }

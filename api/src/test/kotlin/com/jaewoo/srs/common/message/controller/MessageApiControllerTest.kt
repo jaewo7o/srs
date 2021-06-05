@@ -50,14 +50,15 @@ internal class MessageApiControllerTest(
     fun `메세지 수정`() {
         // given
         val saveMessage = save(buildMessage())
-        var dto = UpdateMessageRequest(
+        val dto = UpdateMessageRequest(
             key = saveMessage.key,
             contentsKo = saveMessage.contentsKo + "수정",
             contentsEn = saveMessage.contentsEn + "Modify"
         )
+        val id = saveMessage.id!!
 
         // when
-        mockMvc.put("$baseUrl/${dto.id}") {
+        mockMvc.put("$baseUrl/${id}") {
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(dto)
         }.andExpect {
@@ -65,7 +66,7 @@ internal class MessageApiControllerTest(
         }.andDo { print() }
 
         // then
-        val findMessage = messageRepository.findById(dto.id).get()
+        val findMessage = messageRepository.findById(id).get()
         Assertions.assertThat(findMessage.contentsKo).isEqualTo(dto.contentsKo)
         Assertions.assertThat(findMessage.contentsEn).isEqualTo(dto.contentsEn)
     }
