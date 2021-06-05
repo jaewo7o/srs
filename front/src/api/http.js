@@ -27,7 +27,7 @@ instance.interceptors.response.use(
     function (response) {
         try {
             // Do something with response data
-            return response
+            return response.data
         } catch (err) {
             console.error(
                 '[_axios.interceptors.response] response : ' + err.message
@@ -36,10 +36,13 @@ instance.interceptors.response.use(
     },
     async function (error) {
         try {
-            let errorStatus = error.response.status
+            console.log('====>1')
+            console.log(error.response)
+            console.log('====>2')
+            let errorCode = error.response.status
             const errorAPI = error.config
 
-            if (errorStatus == '401') {
+            if (errorCode === 401) {
                 if (errorAPI.retry) {
                     errorAPI.retry = true
                     await reissueAccessToken()
@@ -48,11 +51,11 @@ instance.interceptors.response.use(
                     alert('인증에 실패했습니다.')
                 }
             }
-            if (errorStatus == '403') alert('권한이 없습니다.')
-            if (errorStatus == '406') alert(error.response.data.message)
-            if (errorStatus == '500') alert('서버에서 오류가 발생하였습니다.')
+            if (errorCode === 403) alert('권한이 없습니다.')
+            if (errorCode === 406) alert(error.response.data.error.message)
+            if (errorCode === 500) alert('서버에서 오류가 발생하였습니다.')
 
-            return error.response
+            return error.response.data
         } catch (err) {
             console.error(
                 '[_axios.interceptors.response] error : ' + err.message

@@ -73,7 +73,6 @@
                                     depressed
                                     large
                                     class="mr-2"
-                                    @click="onClickSignUp"
                                     :disabled="isInvalid"
                                 >
                                     가입하기
@@ -143,7 +142,7 @@ export default {
             if (isValid) {
                 const response = await signUp(this.form)
                 console.log(response)
-                if (response.status === 200) {
+                if (response.isSuccess) {
                     this.$router.push({ name: 'signIn' })
                 }
             }

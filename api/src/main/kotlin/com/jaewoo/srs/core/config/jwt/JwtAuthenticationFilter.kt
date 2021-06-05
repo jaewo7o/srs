@@ -11,27 +11,27 @@ import javax.servlet.http.HttpServletResponse
 
 
 class JwtAuthenticationFilter(
-    private val jwtTokenProvider: JwtTokenProvider,
-    private val securityProperties: SecurityProperties
+    private val jwtTokenProvider: JwtTokenProvider
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         try {
-            val accessToken = jwtTokenProvider.resolveAccessToken(request)
-            if (!securityProperties.securitySkipUrls.contains(request.requestURI)
-                && accessToken.isNotBlank()
-                && jwtTokenProvider.validateToken(accessToken)
-            ) {
-                val loginId = jwtTokenProvider.getUserPk(accessToken)
-                val authentication = jwtTokenProvider.getAuthentication(loginId)
-                SecurityContextHolder.getContext().authentication = authentication
+            jwtTokenProvider.resolveAccessToken(request).let {
+                when (it.isNotBlank() && jwtTokenProvider.validateToken(it)) {
+                    true -> {
+                        val loginId = jwtTokenProvider.getUserPk(it)
+                        val authentication = jwtTokenProvider.getAuthentication(loginId)
+                        SecurityContextHolder.getContext().authentication = authentication
+                    }
+                    false -> {}
+                }
             }
         } catch (e: SignatureException) { //서명 오류 or JWT 구조 문제
-            response.sendError(401, "SignatureException error");
+            response.sendError(401, "SignatureException error")
         } catch (e: ExpiredJwtException) {//유효 기간이 지난 JWT를 수신한 경우
-            response.sendError(401, "ExpiredJwtException error");
+            response.sendError(401, "ExpiredJwtException error")
         } catch (e: Exception) {
-            SecurityContextHolder.clearContext();
+            SecurityContextHolder.clearContext()
         }
 
         chain.doFilter(request, response)

@@ -21,7 +21,6 @@ import org.springframework.web.filter.CorsFilter
 @EnableWebSecurity // 스프링시큐리티 필터가 스프링 필터체인에 등록됨
 class SecurityConfig(
     private val jwtTokenProvider: JwtTokenProvider,
-    private val securityProperties: SecurityProperties,
     private val corsFilter: CorsFilter,
     private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
     private val jwtAccessDeniedHandler: JwtAccessDeniedHandler
@@ -52,7 +51,7 @@ class SecurityConfig(
             .and()
             .addFilterBefore(corsFilter, CsrfFilter::class.java)
             .addFilterBefore(
-                JwtAuthenticationFilter(jwtTokenProvider, securityProperties),
+                JwtAuthenticationFilter(jwtTokenProvider),
                 UsernamePasswordAuthenticationFilter::class.java
             )
     }

@@ -33,7 +33,10 @@ class JwtTokenProvider(
             .compact()
     }
 
-    fun resolveAccessToken(req: HttpServletRequest) = req.getHeader(securityProperties.headerStringAccessToken) ?: ""
+    fun resolveAccessToken(req: HttpServletRequest) : String {
+        return req.getHeader(securityProperties.headerStringAccessToken) ?: ""
+    }
+
     fun resolveRefreshToken(req: HttpServletRequest) = req.getHeader(securityProperties.headerStringRefreshToken) ?: ""
 
     // token 유효성 검사 + 만료일자 확인

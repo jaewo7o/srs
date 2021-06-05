@@ -1,5 +1,6 @@
 package com.jaewoo.srs.core.web.handler
 
+import com.jaewoo.srs.core.web.response.ErrorResponse
 import com.jaewoo.srs.core.web.response.ResponseWrapper
 import com.jaewoo.srs.core.web.response.SrsResponse
 import org.springframework.core.MethodParameter
@@ -27,18 +28,14 @@ class GlobalResponseHandler : ResponseBodyAdvice<Any?> {
         request: ServerHttpRequest,
         response: ServerHttpResponse
     ): Any {
-        if (body == null) {
-            return ""
-        }
-
         if (!selectedContentType.includes(MediaType.APPLICATION_JSON)) {
-            return body
+            return body ?: ""
         }
 
-        if (body is ResponseWrapper) {
-            return ResponseEntity(body, body.status)
+        if (body is ErrorResponse) {
+            return body
         } else {
-            return ResponseEntity.ok(SrsResponse(HttpStatus.OK, body))
+            return SrsResponse(HttpStatus.OK, body)
         }
     }
 }
