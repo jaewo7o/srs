@@ -83,6 +83,16 @@
                             </v-form>
                         </validation-observer>
                     </v-card-text>
+
+                    <div class="text-center mt-5">
+                        <router-link class="text-decoration-none" to="/">
+                            Home
+                        </router-link>
+                        |
+                        <router-link class="text-decoration-none" to="/signIn">
+                            로그인페이지
+                        </router-link>
+                    </div>
                 </v-card>
             </v-col>
         </v-row>

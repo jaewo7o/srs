@@ -13,29 +13,61 @@
                         <v-toolbar-title>Sign In</v-toolbar-title>
                     </v-toolbar>
                     <div class="pa-4">
-                        <v-text-field
-                            v-model="form.loginId"
-                            label="이메일주소를 입력하세요."
-                            prepend-icon="mdi-email"
-                        />
-                        <v-text-field
-                            v-model="form.password"
-                            type="password"
-                            label="패스워드를 입력하세요."
-                            prepend-icon="mdi-lock-outline"
-                        />
-                        <v-btn
-                            color="primary"
-                            depressed
-                            large
-                            block
-                            @click="onClickLogin"
+                        <validation-observer
+                            ref="observer"
+                            v-slot="{ isInvalid }"
                         >
-                            Sign In
-                        </v-btn>
-                        <router-link style="margin-top: 50px" to="/signUp">
-                            회원가입하기
-                        </router-link>
+                            <form @submit.prevent="onClickLogin">
+                                <validation-provider
+                                    name="이메일주소"
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                >
+                                    <v-text-field
+                                        v-model="form.loginId"
+                                        label="이메일주소를 입력하세요."
+                                        prepend-icon="mdi-email"
+                                        :error-messages="errors"
+                                    />
+                                </validation-provider>
+                                <validation-provider
+                                    name="패스워드"
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                >
+                                    <v-text-field
+                                        v-model="form.password"
+                                        type="password"
+                                        label="패스워드를 입력하세요."
+                                        prepend-icon="mdi-lock-outline"
+                                        :error-messages="errors"
+                                    />
+                                </validation-provider>
+                                {{ isInvalid }}
+                                <v-btn
+                                    type="submit"
+                                    color="primary"
+                                    depressed
+                                    large
+                                    block
+                                    :disabled="isInvalid"
+                                >
+                                    Sign In
+                                </v-btn>
+                            </form>
+                        </validation-observer>
+                        <div class="text-center mt-5">
+                            <router-link class="text-decoration-none" to="/">
+                                Home
+                            </router-link>
+                            |
+                            <router-link
+                                class="text-decoration-none"
+                                to="/signUp"
+                            >
+                                회원가입하기
+                            </router-link>
+                        </div>
                     </div>
                 </v-card>
             </v-col>
@@ -62,10 +94,14 @@ export default {
     methods: {
         ...mapActions('auth', ['signIn']),
         onClickLogin: async function () {
-            this.signIn({
-                loginId: this.form.loginId,
-                password: this.form.password
-            })
+            const isValid = await this.$refs.observer.validate()
+
+            if (isValid) {
+                this.signIn({
+                    loginId: this.form.loginId,
+                    password: this.form.password
+                })
+            }
         }
     }
 }

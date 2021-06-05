@@ -27,7 +27,7 @@ export default {
         async signIn({ commit }, { loginId, password }) {
             const response = await authApi.login({ loginId, password })
 
-            if (response.status === 200) {
+            if (response.isSuccess) {
                 localStorage.setItem(
                     'accessToken',
                     response.data.token.accessToken
