@@ -12,7 +12,7 @@
                             <v-form @submit.prevent="onClickSignUp">
                                 <validation-provider
                                     name="이름"
-                                    rules="max:10"
+                                    rules="required|max:10"
                                     v-slot="{ errors }"
                                 >
                                     <v-text-field
@@ -91,40 +91,9 @@
 
 <script>
 import { signUp } from '@/api/user'
-import { extend, ValidationProvider, ValidationObserver } from 'vee-validate'
-import { max, required, numeric, digits, email } from 'vee-validate/dist/rules'
-extend('max', {
-    ...max,
-    message: `{_field_}필드는 {length}자를 초과할 수 없습니다.`
-})
-extend('required', {
-    ...required,
-    message: `{_field_}필드는 필수값입니다.`
-})
-extend('numeric', {
-    ...numeric,
-    message: `{_field_}필드는 숫자만 입력 가능합니다.`
-})
-extend('digits', {
-    ...digits,
-    message: `{_field_}필드는 {length}자리여야 합니다.`
-})
-extend('email', {
-    ...email,
-    message: `잘못입력된 이메일주소입니다.`
-})
-
-// extend('max', (value, param) => {
-//     const limit = param[0]
-//     if (value && value.length > limit) {
-//         return `해당 필드는 ${limit}자를 초과할 수 없습니다.`
-//     }
-//     return true
-// })
 
 export default {
     name: 'SignUp',
-    components: { ValidationObserver, ValidationProvider },
     data() {
         return {
             form: {
