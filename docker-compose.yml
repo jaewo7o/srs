@@ -29,27 +29,27 @@ services:
             - srs-network
         restart: always
 
-    application:
-        container_name: srs-api
-        image: srs-api:0.0.6
-        build:
-            context: ./api
-            dockerfile: Dockerfile
-        environment:
-            DB_HOST: mariadb
-            DB_PORT: 3306
-            DB_DATABASE: srs
-            DB_USERNAME: srs
-            DB_PASSWORD: srs123!!
-            REDIS_HOST: redis
-            REDIS_PORT: 6379
-            SPRING_PROFILES_ACTIVE: dev
-        ports:
-            - 9080:8080
-        depends_on:
-            - database
-        networks:
-            - srs-network
+    # application:
+    #     container_name: srs-api
+    #     image: srs-api:0.0.6
+    #     build:
+    #         context: ./api
+    #         dockerfile: Dockerfile
+    #     environment:
+    #         DB_HOST: mariadb
+    #         DB_PORT: 3306
+    #         DB_DATABASE: srs
+    #         DB_USERNAME: srs
+    #         DB_PASSWORD: srs123!!
+    #         REDIS_HOST: redis
+    #         REDIS_PORT: 6379
+    #         SPRING_PROFILES_ACTIVE: dev
+    #     ports:
+    #         - 9080:8080
+    #     depends_on:
+    #         - database
+    #     networks:
+    #         - srs-network
 
 networks:
     srs-network:
