@@ -1,16 +1,13 @@
 package com.jaewoo.srs.core.web.handler
 
 import com.jaewoo.srs.core.web.response.ErrorResponse
-import com.jaewoo.srs.core.web.response.ResponseWrapper
-import com.jaewoo.srs.core.web.response.SrsResponse
+import com.jaewoo.srs.core.web.response.SuccessResponse
 import org.springframework.core.MethodParameter
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.server.ServerHttpRequest
 import org.springframework.http.server.ServerHttpResponse
-import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice
 
@@ -35,7 +32,7 @@ class GlobalResponseHandler : ResponseBodyAdvice<Any?> {
         if (body is ErrorResponse) {
             return body
         } else {
-            return SrsResponse(HttpStatus.OK, body)
+            return SuccessResponse(HttpStatus.OK, body)
         }
     }
 }
