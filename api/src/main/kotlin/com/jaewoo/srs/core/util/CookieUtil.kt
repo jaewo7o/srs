@@ -1,6 +1,6 @@
 package com.jaewoo.srs.core.util
 
-import com.jaewoo.srs.core.config.properties.SecurityProperties
+import com.jaewoo.srs.core.security.properties.SecurityProperties
 import org.springframework.stereotype.Component
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest

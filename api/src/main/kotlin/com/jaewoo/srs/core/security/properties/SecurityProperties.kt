@@ -1,4 +1,4 @@
-package com.jaewoo.srs.core.config.properties
+package com.jaewoo.srs.core.security.properties
 
 import org.hibernate.validator.constraints.Length
 import org.springframework.boot.context.properties.ConfigurationProperties

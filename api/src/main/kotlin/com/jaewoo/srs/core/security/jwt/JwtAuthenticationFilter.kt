@@ -1,6 +1,6 @@
-package com.jaewoo.srs.core.config.jwt
+package com.jaewoo.srs.core.security.jwt
 
-import com.jaewoo.srs.core.config.properties.SecurityProperties
+import com.jaewoo.srs.core.context.SrsContext
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.security.SignatureException
 import org.springframework.security.core.context.SecurityContextHolder
@@ -22,6 +22,8 @@ class JwtAuthenticationFilter(
                         val loginId = jwtTokenProvider.getUserPk(it)
                         val authentication = jwtTokenProvider.getAuthentication(loginId)
                         SecurityContextHolder.getContext().authentication = authentication
+
+                        //SrsContext.setUser(authentication.principal)
                     }
                     false -> {}
                 }

@@ -1,10 +1,9 @@
 package com.jaewoo.srs.core.config
 
-import com.jaewoo.srs.core.config.jwt.JwtAccessDeniedHandler
-import com.jaewoo.srs.core.config.jwt.JwtAuthenticationEntryPoint
-import com.jaewoo.srs.core.config.jwt.JwtAuthenticationFilter
-import com.jaewoo.srs.core.config.jwt.JwtTokenProvider
-import com.jaewoo.srs.core.config.properties.SecurityProperties
+import com.jaewoo.srs.core.security.jwt.JwtAccessDeniedHandler
+import com.jaewoo.srs.core.security.jwt.JwtAuthenticationEntryPoint
+import com.jaewoo.srs.core.security.jwt.JwtAuthenticationFilter
+import com.jaewoo.srs.core.security.jwt.JwtTokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity

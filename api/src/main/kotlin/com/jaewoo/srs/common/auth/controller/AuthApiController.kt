@@ -1,7 +1,5 @@
 package com.jaewoo.srs.common.auth.controller
 
-import com.jaewoo.srs.app.user.domain.dto.CreateUserRequest
-import com.jaewoo.srs.app.user.service.UserService
 import com.jaewoo.srs.common.auth.domain.dto.LoginRequest
 import com.jaewoo.srs.common.auth.domain.dto.LoginResponse
 import com.jaewoo.srs.common.auth.domain.dto.LoginUser
@@ -9,7 +7,7 @@ import com.jaewoo.srs.common.auth.domain.dto.Token
 import com.jaewoo.srs.common.auth.domain.entity.RefreshToken
 import com.jaewoo.srs.common.auth.service.AuthService
 import com.jaewoo.srs.common.auth.service.TokenService
-import com.jaewoo.srs.core.config.jwt.JwtTokenProvider
+import com.jaewoo.srs.core.security.jwt.JwtTokenProvider
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.PostMapping

@@ -4,10 +4,11 @@ import com.jaewoo.srs.app.user.domain.entity.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.io.Serializable
 
 class PrincipalDetails(
     private val user: User
-) : UserDetails {
+) : UserDetails, Serializable {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf(
             SimpleGrantedAuthority("DEFAULT")
