@@ -1,6 +1,7 @@
 package com.jaewoo.srs.app.user
 
 import com.jaewoo.srs.app.user.domain.dto.CreateUserRequest
+import com.jaewoo.srs.common.code.domain.dto.CreateGroupCodeRequest
 
 fun buildCreateUserRequest(
     name: String = "name",
@@ -12,4 +13,14 @@ fun buildCreateUserRequest(
     mobileNo = mobileNo,
     loginId = loginId,
     password = password
+)
+
+fun buildCreateGroupCodeRequest (
+    groupCode : String = "groupCode",
+    groupCodeNameKo : String = "groupCodeNameKo",
+    groupCodeNameEn : String = "groupCodeNameEn"
+) = CreateGroupCodeRequest(
+    groupCode = groupCode,
+    groupCodeNameKo = groupCodeNameKo,
+    groupCodeNameEn = groupCodeNameEn
 )

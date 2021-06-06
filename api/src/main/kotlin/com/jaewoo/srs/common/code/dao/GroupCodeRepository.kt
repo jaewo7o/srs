@@ -1,7 +1,7 @@
 package com.jaewoo.srs.common.code.dao
 
-import com.jaewoo.srs.common.code.domain.entity.CommonGroupCode
-import com.jaewoo.srs.common.code.domain.entity.QCommonGroupCode
+import com.jaewoo.srs.common.code.domain.entity.GroupCode
+import com.jaewoo.srs.common.code.domain.entity.QGroupCode
 import com.querydsl.core.BooleanBuilder
 import com.querydsl.core.types.Predicate
 import org.springframework.data.domain.Page
@@ -11,13 +11,13 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository
 
-interface CommonGroupCodeRepository : JpaRepository<CommonGroupCode, String> {
+interface GroupCodeRepository : JpaRepository<GroupCode, String> {
 }
 
 @Repository
-class CommonGroupCodeRepositorySupport : QuerydslRepositorySupport(CommonGroupCode::class.java) {
-    fun findAllPage(predicate: Predicate?, pageable: Pageable): Page<CommonGroupCode> {
-        val table = QCommonGroupCode.commonGroupCode
+class GroupCodeRepositorySupport : QuerydslRepositorySupport(GroupCode::class.java) {
+    fun findAllPage(predicate: Predicate?, pageable: Pageable): Page<GroupCode> {
+        val table = QGroupCode.groupCode1
         val sql = from(table)
             .where(predicate)
 
@@ -27,14 +27,14 @@ class CommonGroupCodeRepositorySupport : QuerydslRepositorySupport(CommonGroupCo
     }
 }
 
-class CommonGroupCodePredicator {
+class GroupCodePredicator {
     companion object {
-        private val table = QCommonGroupCode.commonGroupCode
+        private val table = QGroupCode.groupCode1
     }
 
     private var builder = BooleanBuilder()
 
-    fun groupCodeName(groupCodeName: String?): CommonGroupCodePredicator {
+    fun groupCodeName(groupCodeName: String?): GroupCodePredicator {
         if (!groupCodeName.isNullOrBlank()) {
             builder.and(
                 table.groupCodeNameKo.contains(groupCodeName).or(

@@ -1,14 +1,13 @@
 package com.jaewoo.srs.common.code.domain.entity
 
 import com.jaewoo.srs.core.jpa.entity.BaseEntity
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import java.io.Serializable
+import javax.persistence.*
 
-@Table(name = "common_code")
+@IdClass(CodeKey::class)
+@Table(name = "code")
 @Entity
-class CommonCode(
+class Code(
     @Id
     @Column(name = "groupCode", nullable = false)
     val groupCode: String,
@@ -25,4 +24,11 @@ class CommonCode(
 ) : BaseEntity() {
     @Column(name = "sort_rank")
     val sortRank: Int? = 0
+}
+
+class CodeKey (
+    private val groupCode:String,
+    private val code:String
+) : Serializable {
+
 }

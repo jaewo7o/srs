@@ -6,9 +6,9 @@ import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.Table
 
-@Table(name = "common_group_code")
+@Table(name = "group_code")
 @Entity
-class CommonGroupCode(
+class GroupCode(
     @Id
     @Column(name = "groupCode", nullable = false)
     val groupCode: String,
