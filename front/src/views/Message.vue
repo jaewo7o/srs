@@ -10,21 +10,26 @@
             ></v-text-field>
             <v-btn @click="onClickSearch">Search</v-btn>
         </v-card-title>
-        <v-data-table
+        <srs-data-table
+            title="다국어목록"
             :headers="messageDataTable.headers"
             :items="messageDataTable.items"
             :page.sync="page.page"
             :items-per-page="page.size"
             :server-items-length="messageDataTable.totalCount"
-        ></v-data-table>
+        >
+            <div slot="top">"Slot Ok!!!"</div>
+        </srs-data-table>
     </v-card>
 </template>
 
 <script>
 import { getMessages } from '@/api/messages'
+import SrsDataTable from '@/components/base/SrsDataTable'
 
 export default {
     name: 'Message',
+    components: { SrsDataTable },
     data() {
         return {
             searchParams: {
