@@ -4,8 +4,8 @@ import com.jaewoo.srs.app.user.dao.UserRepository
 import com.jaewoo.srs.app.user.domain.entity.User
 import com.jaewoo.srs.common.message.dao.MessageRepository
 import com.jaewoo.srs.common.message.domain.entity.Message
-import com.jaewoo.srs.core.security.properties.SecurityProperties
 import com.jaewoo.srs.core.logging.Log
+import com.jaewoo.srs.core.security.properties.SecurityProperties
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -46,8 +46,9 @@ class Application {
         val message3 = Message("MSG0003", "데이터가 존재하지 않습니다.", "Data does not exist!")
         val message4 = Message("MSG0004", "사용자 정보를 찾을 수 없습니다.", "User does not exists")
         val message5 = Message("MSG0005", "사용자 패스워드가 불일치 합니다.", "User password does not match!!")
+        val message6 = Message("MSG0006", "중복된 데이터가 존재합니다.", "Duplicated data exists!!")
 
-        messageRepository.saveAll(listOf(message1, message2, message3, message4, message5))
+        messageRepository.saveAll(listOf(message1, message2, message3, message4, message5, message6))
     }
 
 }
