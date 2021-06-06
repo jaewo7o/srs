@@ -1,6 +1,6 @@
 package com.jaewoo.srs.core.web.handler
 
-import com.jaewoo.srs.common.message.service.MessageService
+import com.jaewoo.srs.common.message.service.MessageResolveService
 import com.jaewoo.srs.core.exception.SrsDataNotFoundException
 import com.jaewoo.srs.core.exception.SrsRuntimeException
 import com.jaewoo.srs.core.logging.Log
@@ -24,7 +24,7 @@ import javax.persistence.NoResultException
 @RestControllerAdvice
 class GlobalExceptionHandler(
     @Value("\${spring.profiles.active}") private val activeProfile: String,
-    private val messageService: MessageService
+    private val messageResolveService: MessageResolveService
 ) {
     companion object : Log
 
@@ -36,7 +36,7 @@ class GlobalExceptionHandler(
 
     @ExceptionHandler(value = [SrsRuntimeException::class])
     fun handleSrsRuntimeException(ex: SrsRuntimeException): ResponseEntity<*> {
-        val exceptionMessage = messageService.resolveMessage(ex.key)
+        val exceptionMessage = messageResolveService.resolveMessage(ex.key)
         return buildErrorResponse(HttpStatus.NOT_ACCEPTABLE, exceptionMessage, ex)
     }
 

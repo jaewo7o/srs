@@ -13,8 +13,6 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.text.MessageFormat
-import java.util.*
 
 @Service
 class MessageService(
@@ -51,16 +49,6 @@ class MessageService(
     fun getMessage(key: String): Message {
         return messageRepository.findByKey(key)
             .orElseThrow { SrsDataNotFoundException() }
-    }
-
-    fun resolveMessage(key: String, locale: Locale = Locale.KOREAN, vararg args: Any?): String {
-        val message = this.getMessage(key)
-        var i18nMessage = if (Locale.KOREAN.equals(locale)) message.contentsKo else message.contentsEn
-
-        return when (args.isNullOrEmpty()) {
-            true -> i18nMessage
-            false -> MessageFormat.format(i18nMessage, *args)
-        }
     }
 
     fun searchMessage(dto: SearchMessageRequest, pageable: Pageable): Page<Message> {

@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
-internal class MessageServiceTest(
-    private val messageService: MessageService
+internal class MessageResolveServiceTest(
+    private val messageResolveService: MessageResolveService
 ) : SpringTestSupport() {
 
     @Test
@@ -18,7 +18,7 @@ internal class MessageServiceTest(
         val saveMessage = save(buildMessage())
 
         // when
-        val message = messageService.resolveMessage(saveMessage.key)
+        val message = messageResolveService.resolveMessage(saveMessage.key)
 
         // then
         Assertions.assertThat(message).isEqualTo(saveMessage.contentsKo)
@@ -31,7 +31,7 @@ internal class MessageServiceTest(
         val saveMessage = save(buildMessage())
 
         // when
-        val message = messageService.resolveMessage(saveMessage.key, Locale.ENGLISH)
+        val message = messageResolveService.resolveMessage(saveMessage.key, Locale.ENGLISH)
 
         // then
         Assertions.assertThat(message).isEqualTo(saveMessage.contentsEn)
@@ -44,7 +44,7 @@ internal class MessageServiceTest(
         val saveMessage = save(buildMessage(contentsKo = "message {0}"))
 
         // when
-        val message = messageService.resolveMessage(saveMessage.key, Locale.KOREAN, "test")
+        val message = messageResolveService.resolveMessage(saveMessage.key, Locale.KOREAN, "test")
 
         // then
         Assertions.assertThat(message).isEqualTo("message test")
