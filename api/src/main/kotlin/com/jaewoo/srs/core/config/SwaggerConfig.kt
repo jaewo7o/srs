@@ -1,7 +1,7 @@
 package com.jaewoo.srs.core.config
 
 import com.fasterxml.classmate.TypeResolver
-import com.jaewoo.srs.core.config.properties.SecurityProperties
+import com.jaewoo.srs.core.security.properties.SecurityProperties
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import org.springframework.context.annotation.Bean
