@@ -4,15 +4,17 @@ import com.jaewoo.srs.app.user.dao.UserRepository
 import com.jaewoo.srs.app.user.domain.entity.User
 import com.jaewoo.srs.common.message.dao.MessageRepository
 import com.jaewoo.srs.common.message.domain.entity.Message
-import com.jaewoo.srs.core.config.properties.SecurityProperties
+import com.jaewoo.srs.core.security.properties.SecurityProperties
 import com.jaewoo.srs.core.logging.Log
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
+import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
+@EnableCaching
 @EnableConfigurationProperties(SecurityProperties::class)
 @SpringBootApplication
 class Application {
