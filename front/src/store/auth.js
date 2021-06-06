@@ -45,6 +45,9 @@ export default {
             }
         },
         logout({ commit }) {
+            localStorage.removeItem('accessToken')
+            localStorage.removeItem('refreshToken')
+
             commit('setLogout')
             router.push({ name: 'signIn' })
         }
