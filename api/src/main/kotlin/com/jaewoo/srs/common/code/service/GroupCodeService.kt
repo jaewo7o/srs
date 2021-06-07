@@ -19,7 +19,7 @@ class GroupCodeService(
 ) {
     fun searchGroupCodesPageable(dto: SearchGroupCodeRequest, pageable: Pageable): Any {
         val predicate = GroupCodePredicator()
-            .groupCodeName(dto.groupCodeName)
+            .name(dto.name)
             .value()
 
         return groupCodeRepositorySupport.findAllPage(predicate, pageable)

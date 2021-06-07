@@ -34,12 +34,13 @@ class GroupCodePredicator {
 
     private var builder = BooleanBuilder()
 
-    fun groupCodeName(groupCodeName: String?): GroupCodePredicator {
-        if (!groupCodeName.isNullOrBlank()) {
+    fun name(name: String?): GroupCodePredicator {
+        if (!name.isNullOrBlank()) {
             builder.and(
-                table.groupCodeNameKo.contains(groupCodeName).or(
-                    table.groupCodeNameEn.contains(groupCodeName)
-                )
+                table.groupCodeNameKo.contains(name)
+                    .or(
+                        table.groupCodeNameEn.contains(name)
+                    )
             )
         }
 

@@ -41,5 +41,5 @@ data class UpdateGroupCodeRequest(
 @ApiModel(value = "그룹코드 검색")
 data class SearchGroupCodeRequest(
     @ApiParam(value = "검색어")
-    var groupCodeName: String?
+    var name: String?
 )
