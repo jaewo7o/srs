@@ -1,7 +1,7 @@
 package com.jaewoo.srs.core.security.jwt
 
-import com.jaewoo.srs.common.auth.service.PrincipalDetailsService
 import com.jaewoo.srs.core.security.properties.SecurityProperties
+import com.jaewoo.srs.core.security.service.PrincipalDetailsService
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys

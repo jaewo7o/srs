@@ -1,4 +1,4 @@
-package com.jaewoo.srs.common.auth.service
+package com.jaewoo.srs.core.security.service
 
 import com.jaewoo.srs.app.user.dao.UserRepository
 import com.jaewoo.srs.common.auth.domain.vo.PrincipalDetails
@@ -13,7 +13,7 @@ class PrincipalDetailsService(
     private val userRepository: UserRepository
 ) : UserDetailsService {
 
-    //@Cacheable(value = ["user-session"], key="#loginId")
+    @Cacheable(value = ["user-session"], key="#loginId")
     override fun loadUserByUsername(loginId: String): UserDetails {
         val findUser = userRepository.findByLoginId(loginId).orElseThrow{SrsDataNotFoundException()}
         return PrincipalDetails(findUser)

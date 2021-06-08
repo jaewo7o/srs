@@ -31,27 +31,26 @@ class SecurityConfig(
     override fun configure(http: HttpSecurity) {
         http.httpBasic().disable() // rest api 임으로 기본설정 사용안함
             .csrf().disable() // rest api 이기 때문에 csrf 보안 설정 필요 없음
-            .exceptionHandling()
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            .accessDeniedHandler(jwtAccessDeniedHandler)
-
-            .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
 
             .and()
-            .authorizeRequests()
-            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-            .antMatchers("/*/signin", "/api/anonymous/**").permitAll()
-            // swagger 예외처리
-            .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
-            .antMatchers("/api/**").authenticated()
+                .authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                //.antMatchers("/*/signin", "/api/anonymous/**").permitAll()
+                // swagger 예외처리
+                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
+                .antMatchers("/api/**").authenticated()
 
             .and()
-            .addFilterBefore(corsFilter, CsrfFilter::class.java)
-            .addFilterBefore(
-                JwtAuthenticationFilter(jwtTokenProvider),
-                UsernamePasswordAuthenticationFilter::class.java
-            )
+                .addFilterBefore(corsFilter, CsrfFilter::class.java)
+                .addFilterBefore(
+                    JwtAuthenticationFilter(jwtTokenProvider),
+                    UsernamePasswordAuthenticationFilter::class.java
+                )
     }
 }
