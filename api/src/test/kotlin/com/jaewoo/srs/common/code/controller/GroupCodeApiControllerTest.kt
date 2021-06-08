@@ -23,7 +23,7 @@ internal class GroupCodeApiControllerTest(
     @Transactional
     fun `그룹코드 검색 - 페이지`() {
         // given
-        val searchName = "NAMEKO"
+        val searchName = "NAMEKO5"
 
         (1..10).map {
             buildGroupCode(
@@ -42,11 +42,12 @@ internal class GroupCodeApiControllerTest(
         mockMvc.get(baseUrl) {
             param("page", pageNumber.toString())
             param("size", pageSize.toString())
-            param("name", "searchName")
+            param("name", searchName)
         }.andExpect {
             status { isOk() }
             jsonPath("$..size") { value(pageSize) }
             jsonPath("$..number") { value(pageNumber) }
+            jsonPath("$..numberOfElements") { value(1) }
         }.andDo { print() }
     }
 
