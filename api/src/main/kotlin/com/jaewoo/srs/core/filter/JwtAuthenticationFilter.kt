@@ -1,6 +1,6 @@
-package com.jaewoo.srs.core.security.jwt
+package com.jaewoo.srs.core.filter
 
-import com.jaewoo.srs.core.context.SrsContext
+import com.jaewoo.srs.core.security.jwt.JwtTokenProvider
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.security.SignatureException
 import org.springframework.security.core.context.SecurityContextHolder
