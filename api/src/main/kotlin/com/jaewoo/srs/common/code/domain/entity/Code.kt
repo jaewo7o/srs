@@ -17,18 +17,18 @@ class Code(
     val code: String,
 
     @Column(name = "codeNameKo", nullable = false)
-    val codeNameKo: String,
+    var codeNameKo: String,
 
     @Column(name = "codeNameEn")
-    val codeNameEn: String
-) : BaseEntity() {
+    var codeNameEn: String,
+
     @Column(name = "sort_rank")
-    val sortRank: Int? = 0
+    var sortRank: Int? = 0
+) : BaseEntity() {
 }
 
 class CodeKey (
-    private val groupCode:String,
-    private val code:String
+    val groupCode:String = "",
+    val code:String = ""
 ) : Serializable {
-
 }

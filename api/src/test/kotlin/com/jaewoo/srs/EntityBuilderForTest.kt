@@ -1,6 +1,7 @@
 package com.jaewoo.srs.app.user
 
 import com.jaewoo.srs.app.user.domain.entity.User
+import com.jaewoo.srs.common.code.domain.entity.Code
 import com.jaewoo.srs.common.code.domain.entity.GroupCode
 import com.jaewoo.srs.common.message.domain.entity.Message
 
@@ -34,4 +35,19 @@ fun buildGroupCode(
     groupCode = groupCode,
     groupCodeNameKo = groupCodeNameKo,
     groupCodeNameEn = groupCodeNameEn
+)
+
+
+fun buildCode(
+    groupCode: String = "groupCode",
+    code: String = "code",
+    codeNameKo: String = "codeNameKo",
+    codeNameEn: String = "codeNameEn",
+    sortRank:Int = 0
+) = Code(
+    groupCode = groupCode,
+    code = code,
+    codeNameKo = codeNameKo,
+    codeNameEn = codeNameEn,
+    sortRank = sortRank
 )

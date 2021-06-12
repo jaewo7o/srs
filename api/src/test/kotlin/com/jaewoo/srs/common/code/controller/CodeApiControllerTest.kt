@@ -1,9 +1,12 @@
 package com.jaewoo.srs.common.code.controller
 
+import com.jaewoo.srs.app.user.buildCode
 import com.jaewoo.srs.app.user.buildCreateGroupCodeRequest
 import com.jaewoo.srs.app.user.buildGroupCode
+import com.jaewoo.srs.common.code.dao.CodeRepository
 import com.jaewoo.srs.common.code.dao.GroupCodeRepository
 import com.jaewoo.srs.common.code.domain.dto.UpdateGroupCodeRequest
+import com.jaewoo.srs.common.code.domain.entity.CodeKey
 import com.jaewoo.srs.core.exception.SrsDataNotFoundException
 import com.jaewoo.srs.core.test.SpringWebTestSupport
 import org.assertj.core.api.Assertions
@@ -14,8 +17,9 @@ import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
 import org.springframework.transaction.annotation.Transactional
 
-internal class GroupCodeApiControllerTest(
-    private val groupCodeRepository: GroupCodeRepository
+internal class CodeApiControllerTest(
+    private val groupCodeRepository: GroupCodeRepository,
+    private val codeRepository: CodeRepository
 ) : SpringWebTestSupport() {
     val baseUrl = "/api/group-codes"
 
@@ -86,7 +90,8 @@ internal class GroupCodeApiControllerTest(
         }.andDo { print() }
 
         // then
-        val saveGroupCode = groupCodeRepository.findById(beforeGroupCode.groupCode).orElseThrow { SrsDataNotFoundException() }
+        val saveGroupCode =
+            groupCodeRepository.findById(beforeGroupCode.groupCode).orElseThrow { SrsDataNotFoundException() }
         Assertions.assertThat(saveGroupCode).isNotNull
         Assertions.assertThat(saveGroupCode.groupCodeNameKo).isEqualTo(dto.groupCodeNameKo)
         Assertions.assertThat(saveGroupCode.groupCodeNameEn).isEqualTo(dto.groupCodeNameEn)
@@ -114,4 +119,53 @@ internal class GroupCodeApiControllerTest(
         Assertions.assertThat(saveGroupCode.groupCodeNameKo).isEqualTo(dto.groupCodeNameKo)
         Assertions.assertThat(saveGroupCode.groupCodeNameEn).isEqualTo(dto.groupCodeNameEn)
     }
+
+    @Test
+    @Transactional
+    fun `코드 단건 조회`() {
+        // given
+        val saveGroupCode = save(buildGroupCode())
+        val saveCode = save(
+            buildCode(
+                groupCode = saveGroupCode.groupCode
+            )
+        )
+
+        // when & then
+        mockMvc.get("${baseUrl}/${saveCode.groupCode}/codes/${saveCode.code}")
+            .andExpect {
+                status { isOk() }
+                jsonPath("$.data.groupCode") { value(saveCode.groupCode) }
+                jsonPath("$.data.code") { value(saveCode.code) }
+            }.andDo {
+                print()
+            }
+    }
+
+    @Test
+    @Transactional
+    fun `코드 단건 생성`() {
+        // given
+        val saveGroupCode = save(buildGroupCode())
+        val dto = buildCode(groupCode = saveGroupCode.groupCode)
+
+        // when
+        mockMvc.post("${baseUrl}/${saveGroupCode.groupCode}/codes") {
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(dto)
+        }.andExpect {
+            status { isOk() }
+        }.andDo {
+            print()
+        }
+
+        // then
+        val findCode = codeRepository.getOne(CodeKey(dto.groupCode, dto.code))
+        Assertions.assertThat(findCode.groupCode).isEqualTo(dto.groupCode)
+        Assertions.assertThat(findCode.code).isEqualTo(dto.code)
+        Assertions.assertThat(findCode.codeNameKo).isEqualTo(dto.codeNameKo)
+        Assertions.assertThat(findCode.codeNameEn).isEqualTo(dto.codeNameEn)
+        Assertions.assertThat(findCode.sortRank).isEqualTo(dto.sortRank)
+    }
+
 }
