@@ -9,10 +9,6 @@ class CodeDTO
 
 @ApiModel(value = "코드 생성요청")
 data class CreateCodeRequest(
-    @ApiModelProperty(value = "그룹코드", required = true, example = "CM001")
-    @field:NotBlank
-    val groupCode: String,
-
     @ApiModelProperty(value = "코드", required = true, example = "A")
     @field:NotBlank
     val code: String,
@@ -27,6 +23,9 @@ data class CreateCodeRequest(
     @ApiModelProperty(value = "정렬순서", required = false, example = "1")
     val sortRank: Int? = 0
 ) {
+    @ApiModelProperty(value = "그룹코드", hidden = true, required = false, example = "CM001")
+    var groupCode: String = ""
+
     fun toEntity() = Code(
         groupCode = groupCode,
         code = code,
@@ -38,14 +37,6 @@ data class CreateCodeRequest(
 
 @ApiModel(value = "코드 수정요청")
 data class UpdateCodeRequest(
-    @ApiModelProperty(value = "그룹코드", required = true, example = "CM001")
-    @field:NotBlank
-    val groupCode: String,
-
-    @ApiModelProperty(value = "코드", required = true, example = "A")
-    @field:NotBlank
-    val code: String,
-
     @ApiModelProperty(value = "코드 한글명", required = true, example = "메시지분류")
     @field:NotBlank
     val codeNameKo: String,
@@ -55,4 +46,10 @@ data class UpdateCodeRequest(
 
     @ApiModelProperty(value = "정렬순서", required = false, example = "1")
     val sortRank: Int? = 0
-)
+) {
+    @ApiModelProperty(value = "그룹코드", hidden = true, required = true, example = "CM001")
+    val groupCode: String = ""
+
+    @ApiModelProperty(value = "코드", hidden = true, required = true, example = "A")
+    val code: String = ""
+}

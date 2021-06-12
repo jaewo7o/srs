@@ -27,13 +27,11 @@ fun buildCreateGroupCodeRequest(
 )
 
 fun buildCreateCodeRequest(
-    groupCode: String = "groupCode",
     code: String = "code",
     codeNameKo: String = "codeNameKo",
     codeNameEn: String = "codeNameEn",
     sortRank: Int = 0
 ) = CreateCodeRequest(
-    groupCode = groupCode,
     code = code,
     codeNameKo = codeNameKo,
     codeNameEn = codeNameEn,

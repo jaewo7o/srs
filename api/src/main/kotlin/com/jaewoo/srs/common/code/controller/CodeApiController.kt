@@ -1,6 +1,7 @@
 package com.jaewoo.srs.common.code.controller
 
 import com.jaewoo.srs.common.code.domain.dto.*
+import com.jaewoo.srs.common.code.domain.entity.Code
 import com.jaewoo.srs.common.code.service.CodeService
 import com.jaewoo.srs.common.code.service.GroupCodeService
 import io.swagger.annotations.Api
@@ -20,13 +21,12 @@ class CodeApiController(
 ) {
     @ApiOperation(value = "코드그룹 검색")
     @GetMapping("/api/group-codes")
-    fun searchGroupCodesPageable(dto: SearchGroupCodeRequest, pageable: Pageable)
-            = groupCodeService.searchGroupCodesPageable(dto, pageable)
+    fun searchGroupCodesPageable(dto: SearchGroupCodeRequest, pageable: Pageable) =
+        groupCodeService.searchGroupCodesPageable(dto, pageable)
 
     @ApiOperation(value = "코드그룹 단건 조회")
     @GetMapping("/api/group-codes/{groupCode}")
-    fun getGroupCode(@PathVariable groupCode: String)
-            = groupCodeService.getGroupCode(groupCode)
+    fun getGroupCode(@PathVariable groupCode: String) = groupCodeService.getGroupCode(groupCode)
 
     @ApiOperation(value = "코드그룹 단건 수정")
     @PutMapping("/api/group-codes/{groupCode}")
@@ -41,8 +41,7 @@ class CodeApiController(
 
     @ApiOperation(value = "코드 단건 조회")
     @GetMapping("/api/group-codes/{groupCode}/codes/{code}")
-    fun getCode(@PathVariable groupCode: String, @PathVariable code: String)
-        = codeService.getCode(groupCode, code)
+    fun getCode(@PathVariable groupCode: String, @PathVariable code: String) = codeService.getCode(groupCode, code)
 
     @ApiOperation(value = "코드 단건 수정")
     @PutMapping("/api/group-codes/{groupCode}/codes/{code}")
@@ -51,5 +50,11 @@ class CodeApiController(
 
     @ApiOperation(value = "코드 신규 생성")
     @PostMapping("/api/group-codes/{groupCode}/codes")
-    fun createCode(@Valid @RequestBody dto: CreateCodeRequest) = codeService.createCode(dto)
+    fun createCode(
+        @PathVariable groupCode: String,
+        @Valid @RequestBody dto: CreateCodeRequest
+    ): Code {
+        dto.groupCode = groupCode
+        return codeService.createCode(dto)
+    }
 }
