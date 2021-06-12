@@ -1,16 +1,17 @@
 package com.jaewoo.srs.core.web.response
 
-import org.springframework.http.HttpStatus
 import java.time.LocalDateTime
 
 open class ResponseWrapper(
-    status: HttpStatus,
+    val status: Int,
+    val code: String,
+    val message: String
 ) {
-    var isSuccess = true
-    val timestamp: LocalDateTime
+    var isSuccess : Boolean
+    var timestamp : LocalDateTime
 
     init {
+        isSuccess = status == 200
         timestamp = LocalDateTime.now()
-        isSuccess = status.is2xxSuccessful
     }
 }

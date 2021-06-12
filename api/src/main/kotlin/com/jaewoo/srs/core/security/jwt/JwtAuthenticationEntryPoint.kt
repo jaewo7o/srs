@@ -1,10 +1,9 @@
 package com.jaewoo.srs.core.security.jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.jaewoo.srs.core.web.response.ErrorDetail
-import com.jaewoo.srs.core.web.response.ErrorResponse
+import com.jaewoo.srs.core.exception.code.ErrorCode
+import com.jaewoo.srs.core.web.response.EnumErrorResponse
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
@@ -21,20 +20,16 @@ class JwtAuthenticationEntryPoint(
         response: HttpServletResponse,
         authException: AuthenticationException
     ) {
-        // 유효한 자격증명을 제공하지 않고 접근하려 할때 401
-        val errorStatus = HttpStatus.UNAUTHORIZED
+        setErrorResponse(response, request.getAttribute("errorCode") as ErrorCode)
+    }
 
-        response.status = errorStatus.value()
+    fun setErrorResponse(response: HttpServletResponse, errorCode: ErrorCode) {
+        response.status = errorCode.status
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 
-        //val mapper = jacksonObjectMapper()
-        val errorResponse = ErrorResponse(errorStatus, ErrorDetail("Security Error : ${errorStatus.name}", null))
-
-        val errorJson = mapper.writeValueAsString(errorResponse)
-        println(errorJson)
-
+        val errorResponse = EnumErrorResponse(errorCode, null)
         val responseWriter = response.writer
-        responseWriter.print(errorJson)
+        responseWriter.print(mapper.writeValueAsString(errorResponse))
         responseWriter.flush()
     }
 }

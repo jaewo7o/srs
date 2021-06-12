@@ -1,21 +1,14 @@
 package com.jaewoo.srs.core.web.response
 
-import org.springframework.http.HttpStatus
-
 class BindErrorResponse (
-    status: HttpStatus,
-    val error: BindErrorDetail
-) : ResponseWrapper(status) {
+    status: Int,
+    message: String,
+    val fields: List<ErrorField>
+) : ResponseWrapper(status, "BINDERROR", message) {
 
 }
 
-data class BindErrorDetail(
-    val message: String,
-    val fields: List<BindErrorField>
-) {
-}
-
-data class BindErrorField(
+data class ErrorField(
     val fieldName:String,
     val errorMessage: String,
     val bindValue: Any?
