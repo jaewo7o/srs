@@ -4,5 +4,4 @@ import org.springframework.http.HttpStatus
 
 class SuccessResponse(
     val data: Any?
-) : ResponseWrapper(HttpStatus.OK.value(), "OK", "Success") {
-}
+) : ResponseWrapper(HttpStatus.OK.value(), "OK", "Success")

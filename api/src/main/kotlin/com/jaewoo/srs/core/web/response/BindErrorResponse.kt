@@ -1,15 +1,13 @@
 package com.jaewoo.srs.core.web.response
 
-class BindErrorResponse (
+class BindErrorResponse(
     status: Int,
     message: String,
     val fields: List<ErrorField>
-) : ResponseWrapper(status, "BINDERROR", message) {
-
-}
+) : ResponseWrapper(status, "BINDERROR", message)
 
 data class ErrorField(
-    val fieldName:String,
+    val fieldName: String,
     val errorMessage: String,
     val bindValue: Any?
 )

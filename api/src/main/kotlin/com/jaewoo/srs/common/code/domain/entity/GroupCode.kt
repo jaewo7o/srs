@@ -18,5 +18,4 @@ class GroupCode(
 
     @Column(name = "groupCodeNameEn")
     var groupCodeNameEn: String
-) : BaseEntity() {
-}
+) : BaseEntity()

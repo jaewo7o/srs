@@ -11,8 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository
 
-interface GroupCodeRepository : JpaRepository<GroupCode, String> {
-}
+interface GroupCodeRepository : JpaRepository<GroupCode, String>
 
 @Repository
 class GroupCodeRepositorySupport : QuerydslRepositorySupport(GroupCode::class.java) {
