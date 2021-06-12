@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {
+class JwtAuthenticationEntryPoint(
+    private val mapper: ObjectMapper
+) : AuthenticationEntryPoint {
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -25,8 +27,14 @@ class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {
         response.status = errorStatus.value()
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 
-        val mapper = ObjectMapper()
+        //val mapper = jacksonObjectMapper()
         val errorResponse = ErrorResponse(errorStatus, ErrorDetail("Security Error : ${errorStatus.name}", null))
-        response.writer.write(mapper.writeValueAsString(errorResponse))
+
+        val errorJson = mapper.writeValueAsString(errorResponse)
+        println(errorJson)
+
+        val responseWriter = response.writer
+        responseWriter.print(errorJson)
+        responseWriter.flush()
     }
 }
