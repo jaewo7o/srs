@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.*
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -33,6 +34,8 @@ class JacksonConfig {
         javaTimeModule.addDeserializer(LocalDateTime::class.java, LocalDateTimeDeserializer())
 
         objectMapper.registerModule(javaTimeModule)
+        objectMapper.registerModule(KotlinModule())
+
         return objectMapper
     }
 

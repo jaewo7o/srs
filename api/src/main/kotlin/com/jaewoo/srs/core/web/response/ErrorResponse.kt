@@ -4,5 +4,5 @@ class ErrorResponse (
     status: Int,
     message: String,
     val stackTrace: String? = null
-) : ResponseWrapper(status, "BIZERROR", message){
+) : ResponseWrapper(status, "", message){
 }

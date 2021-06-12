@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 open class ResponseWrapper(
     val status: Int,
-    val code: String,
+    var code: String,
     val message: String
 ) {
     var isSuccess : Boolean
@@ -12,6 +12,12 @@ open class ResponseWrapper(
 
     init {
         isSuccess = status == 200
+        if (code.isBlank() && status == 499) {
+            code = "BIZERROR"
+        } else {
+            code = "ERROR"
+        }
+
         timestamp = LocalDateTime.now()
     }
 }
