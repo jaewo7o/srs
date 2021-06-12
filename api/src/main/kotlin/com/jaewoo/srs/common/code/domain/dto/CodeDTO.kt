@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.NotBlank
 
-class CodeDTO
-
 @ApiModel(value = "코드 생성요청")
 data class CreateCodeRequest(
     @ApiModelProperty(value = "코드", required = true, example = "A")

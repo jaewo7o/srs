@@ -6,8 +6,6 @@ import io.swagger.annotations.ApiModelProperty
 import io.swagger.annotations.ApiParam
 import javax.validation.constraints.NotBlank
 
-class GroupCodeDTO
-
 @ApiModel(value = "그룹코드 생성요청")
 data class CreateGroupCodeRequest(
     @ApiModelProperty(value = "그룹코드", required = true, example = "CM001")

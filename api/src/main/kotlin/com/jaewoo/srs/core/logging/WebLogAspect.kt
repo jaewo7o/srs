@@ -13,7 +13,6 @@ import org.springframework.validation.BindingResult
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 import java.util.*
-import kotlin.collections.HashMap
 
 @Aspect
 @Order(5)
@@ -58,7 +57,7 @@ class WebLogAspect(
         webLog.method = request.method
         webRequestLog.set(webLog)
         logger.info(
-            "REQUEST=${request.method} ${request.requestURL.toString()}; SOURCE IP=${request.remoteAddr}; ARGS=${params}"
+            "REQUEST=${request.method} ${request.requestURL}; SOURCE IP=${request.remoteAddr}; ARGS=${params}"
         )
     }
 

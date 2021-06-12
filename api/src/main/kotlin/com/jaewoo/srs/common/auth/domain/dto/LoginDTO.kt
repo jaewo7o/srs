@@ -3,14 +3,12 @@ package com.jaewoo.srs.common.auth.domain.dto
 import io.swagger.annotations.ApiParam
 import javax.validation.constraints.NotBlank
 
-class LoginDTO
-
 data class LoginRequest(
-    @ApiParam(value="로그인ID", required = true, example = "jeawoo.jeong@gmail.com")
+    @ApiParam(value = "로그인ID", required = true, example = "jeawoo.jeong@gmail.com")
     @field:NotBlank
     val loginId: String,
 
-    @ApiParam(value="패스워드", required = true, example = "1234")
+    @ApiParam(value = "패스워드", required = true, example = "1234")
     @field:NotBlank
     val password: String
 )

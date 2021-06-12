@@ -7,8 +7,8 @@ open class ResponseWrapper(
     var code: String,
     val message: String
 ) {
-    var isSuccess : Boolean
-    var timestamp : LocalDateTime
+    private var isSuccess: Boolean
+    private var timestamp: LocalDateTime
 
     init {
         isSuccess = status == 200

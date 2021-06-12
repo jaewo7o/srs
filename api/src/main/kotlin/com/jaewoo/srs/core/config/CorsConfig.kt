@@ -11,8 +11,8 @@ class CorsConfig {
 
     @Bean
     fun corsFilter(): CorsFilter {
-        var source = UrlBasedCorsConfigurationSource()
-        var config = CorsConfiguration().apply {
+        val source = UrlBasedCorsConfigurationSource()
+        val config = CorsConfiguration().apply {
             addAllowedOrigin("*")
             addAllowedHeader("*")
             allowedMethods = listOf("POST", "PUT", "DELETE", "GET", "OPTIONS", "HEAD")

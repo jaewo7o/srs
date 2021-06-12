@@ -24,11 +24,9 @@ class Code(
 
     @Column(name = "sort_rank")
     var sortRank: Int? = 0
-) : BaseEntity() {
-}
+) : BaseEntity()
 
-class CodeKey (
-    val groupCode:String = "",
-    val code:String = ""
-) : Serializable {
-}
+class CodeKey(
+    val groupCode: String = "",
+    val code: String = ""
+) : Serializable

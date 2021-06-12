@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest
 @Component
 class JwtTokenProvider(
     val principalDetailsService: PrincipalDetailsService,
-    val securityProperties: SecurityProperties
+    private final val securityProperties: SecurityProperties
 ) {
     val keyBytes = securityProperties.secretKey.toByteArray()
 
@@ -33,7 +33,7 @@ class JwtTokenProvider(
             .compact()
     }
 
-    fun resolveAccessToken(req: HttpServletRequest) : String {
+    fun resolveAccessToken(req: HttpServletRequest): String {
         return req.getHeader(securityProperties.headerStringAccessToken) ?: ""
     }
 

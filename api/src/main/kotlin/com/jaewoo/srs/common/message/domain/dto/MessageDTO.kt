@@ -6,8 +6,6 @@ import io.swagger.annotations.ApiModelProperty
 import io.swagger.annotations.ApiParam
 import javax.validation.constraints.NotBlank
 
-class MessageDTO
-
 @ApiModel(value = "다국어메시지 생성 DTO")
 data class CreateMessageRequest(
     @ApiModelProperty(value = "다국어키", example = "add")

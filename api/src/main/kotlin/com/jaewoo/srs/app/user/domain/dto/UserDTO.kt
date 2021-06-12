@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.NotBlank
 
-class UserDTO
-
 @ApiModel(value = "사용자생성요청")
 data class CreateUserRequest(
     @ApiModelProperty(value = "사용자명", required = true, example = "정재우")
