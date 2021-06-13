@@ -14,8 +14,7 @@
             title="다국어목록"
             :headers="messageDataTable.headers"
             :items="messageDataTable.items"
-            :page.sync="page.page"
-            :items-per-page="page.size"
+            :options.sync="options"
             :server-items-length="messageDataTable.totalCount"
         >
             <template v-slot:[`item.update`]="{ item }">
@@ -55,9 +54,9 @@ export default {
                 items: [],
                 totalCount: 0
             },
-            page: {
-                size: 5,
-                page: 0
+            options: {
+                page: 1,
+                itemsPerPage: 5
             }
         }
     },
@@ -75,8 +74,11 @@ export default {
     },
     methods: {
         onClickSearch() {
-            this.page.page = 0
-            this.cachedParams = Object.assign(this.searchParams, this.page)
+            this.options.page = 1
+            this.cachedParams = Object.assign(this.searchParams, {
+                page: this.options.page - 1,
+                size: this.options.itemsPerPage
+            })
 
             this.fetchData()
         },
