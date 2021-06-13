@@ -10,48 +10,33 @@
                             v-slot="{ isInvalid }"
                         >
                             <v-form @submit.prevent="onClickSignUp">
-                                <validation-provider
-                                    name="이름"
-                                    rules="required|max:10"
-                                    v-slot="{ errors }"
-                                >
-                                    <srs-text-field
-                                        v-model="form.name"
-                                        label="이름"
-                                        :counter="10"
-                                        :error-messages="errors"
-                                    />
-                                </validation-provider>
-                                <validation-provider
-                                    name="핸드폰번호"
+                                <srs-text-field
+                                    v-model="form.name"
+                                    label="이름"
+                                    :rules="{
+                                        required: true,
+                                        max: 10
+                                    }"
+                                    :counter="10"
+                                />
+                                <srs-text-field
+                                    v-model="form.mobileNo"
+                                    label="핸드폰번호"
                                     :rules="{
                                         required: true,
                                         numeric: true,
                                         digits: 11
                                     }"
-                                    v-slot="{ errors }"
-                                >
-                                    <srs-text-field
-                                        v-model="form.mobileNo"
-                                        label="핸드폰번호"
-                                        :counter="11"
-                                        :error-messages="errors"
-                                    />
-                                </validation-provider>
-                                <validation-provider
-                                    name="이메일주소"
+                                    :counter="11"
+                                />
+                                <srs-text-field
+                                    v-model="form.loginId"
+                                    label="이메일주소"
                                     :rules="{
                                         required: true,
                                         email: true
                                     }"
-                                    v-slot="{ errors }"
-                                >
-                                    <srs-text-field
-                                        v-model="form.loginId"
-                                        label="이메일주소"
-                                        :error-messages="errors"
-                                    />
-                                </validation-provider>
+                                />
                                 <srs-text-field
                                     v-model="form.password"
                                     type="password"
@@ -96,11 +81,9 @@
 
 <script>
 import { signUp } from '@/api/user'
-import SrsTextField from '@/components/base/SrsTextField'
 
 export default {
     name: 'SignUp',
-    components: { SrsTextField },
     data() {
         return {
             form: {
