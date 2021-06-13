@@ -1,5 +1,6 @@
 package com.jaewoo.srs.core.web.response
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDateTime
 
 open class ResponseWrapper(
@@ -7,15 +8,16 @@ open class ResponseWrapper(
     var code: String,
     val message: String
 ) {
+    @JsonProperty("isSuccess")
     private var isSuccess: Boolean
     private var timestamp: LocalDateTime
 
     init {
         isSuccess = status == 200
-        if (code.isBlank() && status == 499) {
-            code = "BIZERROR"
-        } else {
-            code = "ERROR"
+        code = when (status) {
+            200 -> "OK"
+            499 -> "ERR-0001"
+            else -> "ERR-9999"
         }
 
         timestamp = LocalDateTime.now()
