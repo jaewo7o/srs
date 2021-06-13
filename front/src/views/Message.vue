@@ -33,12 +33,10 @@
 </template>
 
 <script>
-import { getMessages } from '@/api/messages'
-//import SrsDataTable from '@/components/base/SrsDataTable'
+import { getMessages, deleteMessage } from '@/api/messages'
 
 export default {
     name: 'Message',
-    //components: { SrsDataTable },
     data() {
         return {
             searchParams: {
@@ -78,17 +76,26 @@ export default {
     methods: {
         onClickSearch() {
             this.page.page = 0
+            this.cachedParams = Object.assign(this.searchParams, this.page)
+
             this.fetchData()
         },
-        onClickUpdateMessage(item) {
+        async onClickUpdateMessage(item) {
             console.log(item)
         },
+        async onClickDeleteMessage(item) {
+            const result = await deleteMessage(item.id)
+            if (result.isSuccess) {
+                this.fetchData()
+            }
+        },
         async fetchData() {
-            this.cachedParams = Object.assign(this.searchParams, this.page)
             const result = await getMessages(this.cachedParams)
 
-            this.messageDataTable.items = result.data.content
-            this.messageDataTable.totalCount = result.data.totalElements
+            if (result.isSuccess) {
+                this.messageDataTable.items = result.data.content
+                this.messageDataTable.totalCount = result.data.totalElements
+            }
         }
     }
 }
