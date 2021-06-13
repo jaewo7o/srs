@@ -20,7 +20,8 @@ class JwtAuthenticationEntryPoint(
         response: HttpServletResponse,
         authException: AuthenticationException
     ) {
-        setErrorResponse(response, request.getAttribute("errorCode") as ErrorCode)
+        val errorCode: ErrorCode? = request.getAttribute("errorCode") as ErrorCode?
+        setErrorResponse(response, errorCode ?: ErrorCode.TOKEN_AUTHENTICATION_ERROR)
     }
 
     fun setErrorResponse(response: HttpServletResponse, errorCode: ErrorCode) {

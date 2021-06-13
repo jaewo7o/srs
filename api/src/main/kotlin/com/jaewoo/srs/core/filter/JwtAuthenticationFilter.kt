@@ -23,10 +23,9 @@ class JwtAuthenticationFilter(
                         val loginId = jwtTokenProvider.getUserPk(it)
                         val authentication = jwtTokenProvider.getAuthentication(loginId)
                         SecurityContextHolder.getContext().authentication = authentication
-
-                        //SrsContext.setUser(authentication.principal)
                     }
-                    false -> {}
+                    false -> {
+                    }
                 }
             }
         } catch (e: SignatureException) { //서명 오류 or JWT 구조 문제
@@ -35,7 +34,6 @@ class JwtAuthenticationFilter(
             request.setAttribute("errorCode", ErrorCode.TOKEN_EXPIRED)
         } catch (e: Exception) {
             request.setAttribute("errorCode", ErrorCode.TOKEN_AUTHENTICATION_ERROR)
-            SecurityContextHolder.clearContext()
         }
 
         chain.doFilter(request, response)
