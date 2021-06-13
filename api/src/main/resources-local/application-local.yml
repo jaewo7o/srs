@@ -17,6 +17,19 @@ spring:
             enabled: true
         restart:
             enabled: true
+    boot:
+        admin:
+            client:
+                auto-registration: true
+                url: http://localhost:8081/
+management:
+    endpoint:
+        health:
+            show-details: always
+    endpoints:
+        web:
+            exposure:
+                include: "*"
 
 logging:
     config: classpath:logback-local.xml
