@@ -2,7 +2,7 @@ import org.asciidoctor.gradle.AsciidoctorTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.4.4"
+    id("org.springframework.boot") version "2.4.7"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.asciidoctor.convert") version "1.5.8"
     id("com.palantir.docker") version "0.26.0"
@@ -48,7 +48,6 @@ sourceSets {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -58,6 +57,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    // jackson library
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // Spring Security
@@ -68,6 +68,10 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
+
+    // Spring Actuator
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("de.codecentric:spring-boot-admin-starter-client:2.3.1")
 
     // Swagger (API Document)
     implementation("io.springfox:springfox-boot-starter:$swaggerVersion")
