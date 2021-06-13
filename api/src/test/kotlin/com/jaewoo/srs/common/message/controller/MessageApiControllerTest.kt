@@ -4,6 +4,7 @@ import com.jaewoo.srs.app.user.buildMessage
 import com.jaewoo.srs.common.message.dao.MessageRepository
 import com.jaewoo.srs.common.message.domain.dto.CreateMessageRequest
 import com.jaewoo.srs.common.message.domain.dto.UpdateMessageRequest
+import com.jaewoo.srs.common.message.domain.enum.MessageType
 import com.jaewoo.srs.core.test.SpringWebTestSupport
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -25,6 +26,7 @@ internal class MessageApiControllerTest(
         // given
         val dto = CreateMessageRequest(
             key = "MSGKEY",
+            messageType = MessageType.UI_MESSAGE,
             contentsKo = "CONTENTS1Ko",
             contentsEn = "CONTENTS1En"
         )
@@ -53,6 +55,7 @@ internal class MessageApiControllerTest(
         val saveMessage = save(buildMessage())
         val dto = UpdateMessageRequest(
             key = saveMessage.key,
+            messageType = MessageType.UI_MESSAGE,
             contentsKo = saveMessage.contentsKo + "수정",
             contentsEn = saveMessage.contentsEn + "Modify"
         )

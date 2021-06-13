@@ -4,6 +4,7 @@ import com.jaewoo.srs.app.user.domain.entity.User
 import com.jaewoo.srs.common.code.domain.entity.Code
 import com.jaewoo.srs.common.code.domain.entity.GroupCode
 import com.jaewoo.srs.common.message.domain.entity.Message
+import com.jaewoo.srs.common.message.domain.enum.MessageType
 
 fun buildUser(
     name: String = "name",
@@ -19,10 +20,12 @@ fun buildUser(
 
 fun buildMessage(
     key: String = "key",
+    messageType: MessageType = MessageType.SERVER_MESSAGE,
     contentsKo: String = "contentsKo",
     contentsEn: String = "contentsEn",
 ) = Message(
     key = key,
+    messageType = messageType,
     contentsKo = contentsKo,
     contentsEn = contentsEn
 )
@@ -43,7 +46,7 @@ fun buildCode(
     code: String = "code",
     codeNameKo: String = "codeNameKo",
     codeNameEn: String = "codeNameEn",
-    sortRank:Int = 0
+    sortRank: Int = 0
 ) = Code(
     groupCode = groupCode,
     code = code,

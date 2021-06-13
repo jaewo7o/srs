@@ -1,5 +1,6 @@
 package com.jaewoo.srs.common.message.domain.entity
 
+import com.jaewoo.srs.common.message.domain.enum.MessageType
 import com.jaewoo.srs.core.jpa.entity.BaseEntity
 import javax.persistence.*
 
@@ -8,6 +9,10 @@ import javax.persistence.*
 class Message(
     @Column(name = "message_key")
     var key: String,
+
+    //@Convert(converter = MessageTypeConverter::class)
+    @Column(name = "message_type")
+    var messageType: MessageType,
 
     @Column(name = "message_ko")
     var contentsKo: String,

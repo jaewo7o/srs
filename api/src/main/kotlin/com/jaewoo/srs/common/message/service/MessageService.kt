@@ -34,6 +34,7 @@ class MessageService(
     @Transactional
     fun updateMessage(dto: UpdateMessageRequest): Message {
         val message = this.getMessage(dto.id).also {
+            it.messageType = dto.messageType
             it.contentsKo = dto.contentsKo
             it.contentsEn = dto.contentsEn
         }
