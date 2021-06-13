@@ -59,4 +59,9 @@ class MessageService(
 
         return messageRepositorySupport.findAllPage(predicate, pageable)
     }
+
+    @Transactional
+    fun deleteMessage(id: Long) {
+        messageRepository.deleteById(id)
+    }
 }

@@ -10,7 +10,7 @@
             ></v-text-field>
             <v-btn @click="onClickSearch">Search</v-btn>
         </v-card-title>
-        <srs-data-table
+        <v-data-table
             title="다국어목록"
             :headers="messageDataTable.headers"
             :items="messageDataTable.items"
@@ -18,18 +18,27 @@
             :items-per-page="page.size"
             :server-items-length="messageDataTable.totalCount"
         >
-            <div slot="top">"Slot Ok!!!"</div>
-        </srs-data-table>
+            <template v-slot:[`item.update`]="{ item }">
+                <v-btn icon @click="onClickUpdateMessage(item)">
+                    <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+            </template>
+            <template v-slot:[`item.delete`]="{ item }">
+                <v-btn icon @click="onClickDeleteMessage(item)">
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+            </template>
+        </v-data-table>
     </v-card>
 </template>
 
 <script>
 import { getMessages } from '@/api/messages'
-import SrsDataTable from '@/components/base/SrsDataTable'
+//import SrsDataTable from '@/components/base/SrsDataTable'
 
 export default {
     name: 'Message',
-    components: { SrsDataTable },
+    //components: { SrsDataTable },
     data() {
         return {
             searchParams: {
@@ -41,13 +50,15 @@ export default {
                     { text: 'Id', value: 'id', align: 'end' },
                     { text: 'Key', value: 'key', align: 'center' },
                     { text: 'Korean', value: 'contentsKo', align: 'start' },
-                    { text: 'English', value: 'contentsEn', align: 'start' }
+                    { text: 'English', value: 'contentsEn', align: 'start' },
+                    { text: 'Modify', value: 'update', align: 'center' },
+                    { text: 'Delete', value: 'delete', align: 'center' }
                 ],
                 items: [],
                 totalCount: 0
             },
             page: {
-                size: 2,
+                size: 5,
                 page: 0
             }
         }
@@ -69,9 +80,13 @@ export default {
             this.page.page = 0
             this.fetchData()
         },
+        onClickUpdateMessage(item) {
+            console.log(item)
+        },
         async fetchData() {
             this.cachedParams = Object.assign(this.searchParams, this.page)
             const result = await getMessages(this.cachedParams)
+
             this.messageDataTable.items = result.data.content
             this.messageDataTable.totalCount = result.data.totalElements
         }

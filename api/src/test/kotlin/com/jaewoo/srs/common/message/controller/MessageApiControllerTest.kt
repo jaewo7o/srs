@@ -8,6 +8,7 @@ import com.jaewoo.srs.core.test.SpringWebTestSupport
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
@@ -69,6 +70,25 @@ internal class MessageApiControllerTest(
         val findMessage = messageRepository.findById(id).get()
         Assertions.assertThat(findMessage.contentsKo).isEqualTo(dto.contentsKo)
         Assertions.assertThat(findMessage.contentsEn).isEqualTo(dto.contentsEn)
+    }
+
+    @Test
+    @Transactional
+    fun `메세지 삭제`() {
+        // given
+        val saveMessage = save(buildMessage())
+        val id = saveMessage.id!!
+
+        // when
+        mockMvc.delete("$baseUrl/${id}") {
+            contentType = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isOk() }
+        }.andDo { print() }
+
+        // then
+        val findMessage = messageRepository.findById(id)
+        Assertions.assertThat(findMessage.isPresent).isFalse()
     }
 
     @Test

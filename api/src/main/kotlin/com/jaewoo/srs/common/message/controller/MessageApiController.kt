@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+import javax.validation.constraints.NotBlank
 
 @Api(
     tags = ["Message"],
@@ -34,6 +35,14 @@ class MessageApiController(
     ): Message {
         dto.id = id
         return messageService.updateMessage(dto)
+    }
+
+    @ApiOperation(value = "다국어메세지 삭제", notes = "ID에 맞는 다국어메시지를 삭제한다.")
+    @DeleteMapping("/{id}")
+    fun deleteMessage(
+        @Valid @NotBlank @PathVariable id: Long,
+    ) {
+        return messageService.deleteMessage(id)
     }
 
     @ApiOperation(value = "다국어메세지 단건 조회", notes = "ID에 맞는 다국어메시지를 조회한다.")

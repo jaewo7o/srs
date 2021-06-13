@@ -23,6 +23,7 @@ class MessageRepositorySupport : QuerydslRepositorySupport(Message::class.java) 
         val table = QMessage.message
         val sql = from(table)
             .where(predicate)
+            .orderBy(table.id.desc())
 
         val queryResult = querydsl!!.applyPagination(pageable, sql).fetch()
 
