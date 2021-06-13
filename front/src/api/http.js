@@ -1,5 +1,7 @@
+/* eslint-disable prettier/prettier */
 import axios from 'axios'
 import { reissueAccessToken } from './auth'
+import router from '../router'
 
 const instance = axios.create({
     baseURL: process.env.VUE_APP_API_URL,
@@ -9,10 +11,8 @@ const instance = axios.create({
 instance.interceptors.request.use(
     async function (config) {
         // Do something before request is sent
-        config.headers['X-AUTH-ACCESS-TOKEN'] =
-            localStorage.getItem('accessToken') || ''
-        config.headers['X-AUTH-REFRESH-TOKEN'] =
-            localStorage.getItem('refreshToken') || ''
+        config.headers['X-AUTH-ACCESS-TOKEN'] = localStorage.getItem('accessToken') || ''
+        config.headers['X-AUTH-REFRESH-TOKEN'] = localStorage.getItem('refreshToken') || ''
 
         return config
     },
@@ -29,9 +29,7 @@ instance.interceptors.response.use(
             // Do something with response data
             return response.data
         } catch (err) {
-            console.error(
-                '[_axios.interceptors.response] response : ' + err.message
-            )
+            console.error('[_axios.interceptors.response] response : ' + err.message)
         }
     },
     async function (error) {
@@ -51,6 +49,7 @@ instance.interceptors.response.use(
                     return await instance(errorAPI)
                 } else {
                     alert('인증에 실패했습니다.')
+                    router.push({ name: 'signIn' })
                 }
             }
             if (errorCode === 403) alert('권한이 없습니다.')
@@ -59,9 +58,7 @@ instance.interceptors.response.use(
 
             return error.response.data
         } catch (err) {
-            console.error(
-                '[_axios.interceptors.response] error : ' + err.message
-            )
+            console.error('[_axios.interceptors.response] error : ' + err.message)
         }
     }
 )
