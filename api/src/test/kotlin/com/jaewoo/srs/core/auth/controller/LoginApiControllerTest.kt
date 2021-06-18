@@ -9,9 +9,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.test.web.servlet.post
 import org.springframework.transaction.annotation.Transactional
 
-internal class AuthApiControllerTest(
+
+internal class LoginApiControllerTest(
     private val encodePassword: BCryptPasswordEncoder
 ) : SpringWebTestSupport() {
+
+    private val baseUrl = "/api/signin"
 
     @Transactional
     @Test
@@ -25,7 +28,7 @@ internal class AuthApiControllerTest(
         })
 
         // when & then
-        mockMvc.post("/api/signin") {
+        mockMvc.post(baseUrl) {
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(LoginRequest(dto.loginId, dto.password))
         }.andExpect {
@@ -52,7 +55,7 @@ internal class AuthApiControllerTest(
         })
 
         // when & then
-        mockMvc.post("/api/signin") {
+        mockMvc.post(baseUrl) {
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(LoginRequest(dto.loginId, dto.password + "x"))
         }.andExpect {

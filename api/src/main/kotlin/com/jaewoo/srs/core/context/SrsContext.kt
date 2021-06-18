@@ -1,12 +1,12 @@
 package com.jaewoo.srs.core.context
 
-import com.jaewoo.srs.app.user.domain.entity.User
+import com.jaewoo.srs.common.auth.domain.vo.Session
 
 class SrsContext {
     companion object {
-        private val userStore = ThreadLocal<User>()
+        private val threadLocal = ThreadLocal<Session>()
 
-        fun setUser(user: User) = userStore.set(user)
-        fun getUser() = userStore.get()
+        fun setSession(session: Session) = threadLocal.set(session)
+        fun getSession() = threadLocal.get()
     }
 }

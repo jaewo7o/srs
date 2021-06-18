@@ -1,6 +1,8 @@
 package com.jaewoo.srs.core.test
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.jaewoo.srs.common.auth.domain.vo.Session
+import com.jaewoo.srs.core.context.SrsContext
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -52,6 +54,15 @@ class SpringWebTestSupport : SpringTestSupport() {
             .alwaysDo<DefaultMockMvcBuilder>(MockMvcResultHandlers.print())
             .alwaysDo<DefaultMockMvcBuilder>(restdocs.write())
             .build()
+
+        var session = Session(
+            name = "Jung Jaewoo",
+            mobileNo = "010-9910-2227",
+            loginId = "jeawoo.jeong@gmail.com",
+            password = ""
+        )
+
+        SrsContext.setSession(session)
     }
 }
 

@@ -1,13 +1,12 @@
 package com.jaewoo.srs.common.auth.domain.vo
 
-import com.jaewoo.srs.app.user.domain.entity.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.io.Serializable
 
 class PrincipalDetails(
-    private val user: User
+    private val session: Session
 ) : UserDetails, Serializable {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf(
@@ -15,9 +14,9 @@ class PrincipalDetails(
         )
     }
 
-    override fun getPassword() = user.password
+    override fun getPassword() = session.password
 
-    override fun getUsername() = user.loginId
+    override fun getUsername() = session.loginId
 
     override fun isAccountNonExpired() = true
 

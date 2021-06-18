@@ -1,5 +1,6 @@
 package com.jaewoo.srs.core.config
 
+import com.jaewoo.srs.common.auth.service.CacheSessionService
 import com.jaewoo.srs.core.filter.JwtAuthenticationFilter
 import com.jaewoo.srs.core.security.jwt.JwtAccessDeniedHandler
 import com.jaewoo.srs.core.security.jwt.JwtAuthenticationEntryPoint
@@ -20,6 +21,7 @@ import org.springframework.web.filter.CorsFilter
 @EnableWebSecurity // 스프링시큐리티 필터가 스프링 필터체인에 등록됨
 class SecurityConfig(
     private val jwtTokenProvider: JwtTokenProvider,
+    private val cacheSessionService: CacheSessionService,
     private val corsFilter: CorsFilter,
     private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
     private val jwtAccessDeniedHandler: JwtAccessDeniedHandler
@@ -34,23 +36,23 @@ class SecurityConfig(
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
+            .exceptionHandling()
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .accessDeniedHandler(jwtAccessDeniedHandler)
 
             .and()
-                .authorizeRequests()
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers("/*/signin", "/api/anonymous/**").permitAll()
-                // swagger 예외처리
-                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
-                .antMatchers("/api/**").authenticated()
+            .authorizeRequests()
+            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+            .antMatchers("/*/signin", "/api/anonymous/**").permitAll()
+            // swagger 예외처리
+            .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
+            .antMatchers("/api/**").authenticated()
 
             .and()
-                .addFilterBefore(corsFilter, CsrfFilter::class.java)
-                .addFilterBefore(
-                    JwtAuthenticationFilter(jwtTokenProvider),
-                    UsernamePasswordAuthenticationFilter::class.java
-                )
+            .addFilterBefore(corsFilter, CsrfFilter::class.java)
+            .addFilterBefore(
+                JwtAuthenticationFilter(jwtTokenProvider, cacheSessionService),
+                UsernamePasswordAuthenticationFilter::class.java
+            )
     }
 }

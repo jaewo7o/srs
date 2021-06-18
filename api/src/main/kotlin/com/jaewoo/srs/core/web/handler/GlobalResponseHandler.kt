@@ -3,7 +3,9 @@ package com.jaewoo.srs.core.web.handler
 import com.jaewoo.srs.core.web.response.ErrorResponse
 import com.jaewoo.srs.core.web.response.SuccessResponse
 import org.springframework.core.MethodParameter
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.server.ServerHttpRequest
 import org.springframework.http.server.ServerHttpResponse
@@ -29,9 +31,9 @@ class GlobalResponseHandler : ResponseBodyAdvice<Any?> {
         }
 
         if (body is ErrorResponse) {
-            return body
+            return ResponseEntity<ErrorResponse>(body, HttpStatus.BAD_REQUEST)
         } else {
-            return SuccessResponse(body)
+            return ResponseEntity.ok(SuccessResponse(body))
         }
     }
 }

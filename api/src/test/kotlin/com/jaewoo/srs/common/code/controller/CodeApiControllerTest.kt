@@ -67,9 +67,9 @@ internal class CodeApiControllerTest(
         mockMvc.get("${baseUrl}/${saveGroupCode.groupCode}")
             .andExpect {
                 status { isOk() }
-                jsonPath("$.data.groupCode") { value(saveGroupCode.groupCode) }
-                jsonPath("$.data.groupCodeNameKo") { value(saveGroupCode.groupCodeNameKo) }
-                jsonPath("$.data.groupCodeNameEn") { value(saveGroupCode.groupCodeNameEn) }
+                jsonPath("$..groupCode") { value(saveGroupCode.groupCode) }
+                jsonPath("$..groupCodeNameKo") { value(saveGroupCode.groupCodeNameKo) }
+                jsonPath("$..groupCodeNameEn") { value(saveGroupCode.groupCodeNameEn) }
             }.andDo { print() }
     }
 
@@ -137,8 +137,8 @@ internal class CodeApiControllerTest(
         mockMvc.get("${baseUrl}/${saveCode.groupCode}/codes/${saveCode.code}")
             .andExpect {
                 status { isOk() }
-                jsonPath("$.data.groupCode") { value(saveCode.groupCode) }
-                jsonPath("$.data.code") { value(saveCode.code) }
+                jsonPath("$.body.data.groupCode") { value(saveCode.groupCode) }
+                jsonPath("$.body.data.code") { value(saveCode.code) }
             }.andDo {
                 print()
             }

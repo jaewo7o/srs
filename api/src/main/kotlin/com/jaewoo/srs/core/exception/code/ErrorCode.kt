@@ -7,5 +7,6 @@ enum class ErrorCode(
 ) {
     TOKEN_SIGNATURE_INVALID(401, "SECURITY-001", "SignatureException error"),
     TOKEN_EXPIRED(401, "SECURITY-002", "JWT Token Expired!"),
-    TOKEN_AUTHENTICATION_ERROR(401, "SECURITY-003", "JWT Token Authentication Error!")
+    TOKEN_AUTHENTICATION_ERROR(401, "SECURITY-003", "JWT Token Authentication Error!"),
+    REISSUE_TOKEN_ERROR(401, "SECURITY-004", "Session does not exists while reissuing refresh token")
 }
