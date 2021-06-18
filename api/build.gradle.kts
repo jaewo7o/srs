@@ -45,6 +45,12 @@ sourceSets {
             srcDirs(listOf("src/main/resources", "src/main/resources-$profile"))
         }
     }
+
+    test {
+        resources {
+            srcDirs(listOf("src/main/resources", "src/main/resources-test"))
+        }
+    }
 }
 
 dependencies {
