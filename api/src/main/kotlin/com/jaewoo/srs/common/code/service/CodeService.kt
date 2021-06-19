@@ -14,8 +14,11 @@ class CodeService(
     private val codeRepository: CodeRepository
 ) {
 
-    fun getCode(groupCode: String, code: String)
-        = codeRepository.findById(CodeKey(groupCode, code)).orElseThrow { SrsDataNotFoundException() }
+    fun getCodes(groupCode: String) =
+        codeRepository.findByGroupCode(groupCode)
+
+    fun getCode(groupCode: String, code: String) =
+        codeRepository.findById(CodeKey(groupCode, code)).orElseThrow { SrsDataNotFoundException() }
 
     fun updateCode(groupCode: String, code: String, dto: UpdateCodeRequest): Code {
         val codeEntity = getCode(groupCode, code).also {

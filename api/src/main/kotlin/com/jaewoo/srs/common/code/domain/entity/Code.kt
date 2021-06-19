@@ -10,11 +10,11 @@ import javax.persistence.*
 class Code(
     @Id
     @Column(name = "groupCode", nullable = false)
-    val groupCode: String,
+    var groupCode: String,
 
     @Id
     @Column(name = "code", nullable = false)
-    val code: String,
+    var code: String,
 
     @Column(name = "codeNameKo", nullable = false)
     var codeNameKo: String,

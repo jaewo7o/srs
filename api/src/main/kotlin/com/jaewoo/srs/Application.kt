@@ -2,6 +2,10 @@ package com.jaewoo.srs
 
 import com.jaewoo.srs.app.user.dao.UserRepository
 import com.jaewoo.srs.app.user.domain.entity.User
+import com.jaewoo.srs.common.code.dao.CodeRepository
+import com.jaewoo.srs.common.code.dao.GroupCodeRepository
+import com.jaewoo.srs.common.code.domain.entity.Code
+import com.jaewoo.srs.common.code.domain.entity.GroupCode
 import com.jaewoo.srs.common.message.dao.MessageRepository
 import com.jaewoo.srs.common.message.domain.entity.Message
 import com.jaewoo.srs.common.message.domain.enum.MessageType.SERVER_MESSAGE
@@ -25,6 +29,8 @@ class Application {
     fun databaseInitializer(
         userRepository: UserRepository,
         messageRepository: MessageRepository,
+        groupCodeRepository: GroupCodeRepository,
+        codeRepository: CodeRepository,
         encodePassword: BCryptPasswordEncoder
     ) = CommandLineRunner {
         logger.trace("trace!!")
@@ -51,6 +57,33 @@ class Application {
         val message6 = Message("MSG0006", SERVER_MESSAGE, "중복된 데이터가 존재합니다.", "Duplicated data exists!!")
 
         messageRepository.saveAll(listOf(message1, message2, message3, message4, message5, message6))
+
+        val groupCode = GroupCode(
+            groupCode = "CM001",
+            groupCodeNameKo = "Message Type",
+            groupCodeNameEn = "Message Type"
+        )
+        groupCodeRepository.save(groupCode)
+
+
+        val code1 =
+            Code(groupCode = groupCode.groupCode, code = "UT", codeNameKo = "용어", codeNameEn = "Term", sortRank = 1)
+        val code2 = Code(
+            groupCode = groupCode.groupCode,
+            code = "UM",
+            codeNameKo = "화면메시지",
+            codeNameEn = "UI Message",
+            sortRank = 2
+        )
+        val code3 = Code(
+            groupCode = groupCode.groupCode,
+            code = "SM",
+            codeNameKo = "서버메시지",
+            codeNameEn = "Server Message",
+            sortRank = 3
+        )
+
+        codeRepository.saveAll(listOf(code1, code2, code3))
     }
 
 }

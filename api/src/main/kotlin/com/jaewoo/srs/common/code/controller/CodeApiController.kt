@@ -39,6 +39,18 @@ class CodeApiController(
         groupCodeService.createGroupCode(dto)
     }
 
+    @ApiOperation(value = "코드 목록 조회")
+    @GetMapping("/api/group-codes/{groupCode}/codes")
+    fun getCode(@PathVariable groupCode: String) = codeService.getCodes(groupCode).map {
+        SearchCodeResponse(
+            groupCode = it.groupCode,
+            code = it.code,
+            codeNameKo = it.codeNameKo,
+            codeNameEn = it.codeNameEn,
+            sortRank = it.sortRank
+        )
+    }
+
     @ApiOperation(value = "코드 단건 조회")
     @GetMapping("/api/group-codes/{groupCode}/codes/{code}")
     fun getCode(@PathVariable groupCode: String, @PathVariable code: String) = codeService.getCode(groupCode, code)

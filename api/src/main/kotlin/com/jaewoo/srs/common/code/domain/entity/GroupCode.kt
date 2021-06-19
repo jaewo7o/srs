@@ -11,7 +11,7 @@ import javax.persistence.Table
 class GroupCode(
     @Id
     @Column(name = "groupCode", nullable = false)
-    val groupCode: String,
+    var groupCode: String,
 
     @Column(name = "groupCodeNameKo", nullable = false)
     var groupCodeNameKo: String,

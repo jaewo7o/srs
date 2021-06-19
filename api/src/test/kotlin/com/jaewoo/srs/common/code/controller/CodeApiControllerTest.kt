@@ -125,6 +125,34 @@ internal class CodeApiControllerTest(
 
     @Test
     @Transactional
+    fun `코드 목록 조회`() {
+        // given
+        val saveGroupCode = save(buildGroupCode())
+
+        (1..10).map {
+            buildCode(
+                groupCode = saveGroupCode.groupCode,
+                code = "A$it",
+                codeNameKo = "contents$it",
+                codeNameEn = "contents$it"
+            )
+        }.also {
+            saveAll(it)
+        }
+
+        // when & then
+        mockMvc.get("${baseUrl}/${saveGroupCode.groupCode}/codes")
+            .andExpect {
+                status { isOk() }
+                jsonPath("$.body.data[0].groupCode") { value(saveGroupCode.groupCode) }
+                jsonPath("$.body.data.length()") { value(10) }
+            }.andDo {
+                print()
+            }
+    }
+
+    @Test
+    @Transactional
     fun `코드 단건 조회`() {
         // given
         val saveGroupCode = save(buildGroupCode())

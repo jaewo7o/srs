@@ -51,3 +51,21 @@ data class UpdateCodeRequest(
     @ApiModelProperty(value = "코드", hidden = true, required = true, example = "A")
     val code: String = ""
 }
+
+@ApiModel(value = "코드 조회 결과")
+data class SearchCodeResponse(
+    @ApiModelProperty(value = "그룹코드")
+    var groupCode: String = "",
+
+    @ApiModelProperty(value = "코드")
+    val code: String,
+
+    @ApiModelProperty(value = "코드 한글명")
+    val codeNameKo: String,
+
+    @ApiModelProperty(value = "코드 영문명")
+    val codeNameEn: String,
+
+    @ApiModelProperty(value = "정렬순서")
+    val sortRank: Int?
+)
