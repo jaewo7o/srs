@@ -10,7 +10,10 @@
             ></v-text-field>
             <v-btn @click="onClickSearch">Search</v-btn>
         </v-card-title>
-        <v-data-table
+        <v-card-actions>
+            <v-btn @click="onClickNewMessage">New Message</v-btn>
+        </v-card-actions>
+        <srs-data-table
             title="다국어목록"
             :headers="messageDataTable.headers"
             :items="messageDataTable.items"
@@ -27,14 +30,36 @@
                     <v-icon>mdi-delete</v-icon>
                 </v-btn>
             </template>
-        </v-data-table>
+        </srs-data-table>
+        <v-dialog max-width="600" v-model="isOpenDialog">
+            <v-card>
+                <v-form>
+                    <v-card-title>Message Create</v-card-title>
+                    <v-divider></v-divider>
+                    <v-card-text>
+                        <srs-text-field v-model="form.key" label="Key" />
+                        <srs-combobox v-model="form.messageType" label="Type" />
+                        <srs-text-field v-model="form.contentsKo" label="Korean" />
+                        <srs-text-field v-model="form.contentsEn" label="English" />
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer />
+                        <v-btn @click="onClickSaveMessage">Save</v-btn>
+                        <v-btn @click="onClickClose">Close</v-btn>
+                    </v-card-actions>
+                </v-form>
+            </v-card>
+        </v-dialog>
     </v-card>
 </template>
 
 <script>
-import { getMessages, deleteMessage } from '@/api/messages'
+import { getMessages, createMessage, deleteMessage } from '@/api/messages'
+import { getCodes } from '@/api/codes'
+import SrsTextField from '@/components/base/SrsTextField.vue'
 
 export default {
+    components: { SrsTextField },
     name: 'Message',
     data() {
         return {
@@ -54,6 +79,13 @@ export default {
                 items: [],
                 totalCount: 0
             },
+            isOpenDialog: false,
+            form: {
+                id: '',
+                key: '',
+                contentsKo: '',
+                contentsEn: ''
+            },
             options: {
                 page: 1,
                 itemsPerPage: 5
@@ -70,6 +102,9 @@ export default {
         }
     },
     async created() {
+        const codes = getCodes('CM001')
+        console.log(codes)
+
         this.onClickSearch()
     },
     methods: {
@@ -81,6 +116,16 @@ export default {
             })
 
             this.fetchData()
+        },
+        async onClickSaveMessage() {
+            createMessage(this.form)
+        },
+        onClickClose() {
+            this.isOpenDialog = false
+        },
+        async onClickNewMessage() {
+            console.log('====>')
+            this.isOpenDialog = true
         },
         async onClickUpdateMessage(item) {
             console.log(item)
