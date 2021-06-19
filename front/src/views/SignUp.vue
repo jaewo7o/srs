@@ -5,10 +5,7 @@
                 <v-card>
                     <v-card-title>회원 가입하기</v-card-title>
                     <v-card-text class="pa-4">
-                        <validation-observer
-                            ref="observer"
-                            v-slot="{ isInvalid }"
-                        >
+                        <validation-observer ref="observer" v-slot="{ isInvalid }">
                             <v-form @submit.prevent="onClickSignUp">
                                 <srs-text-field
                                     v-model="form.name"
@@ -37,41 +34,20 @@
                                         email: true
                                     }"
                                 />
-                                <srs-text-field
-                                    v-model="form.password"
-                                    type="password"
-                                    label="패스워드"
-                                />
-                                <srs-text-field
-                                    v-model="form.password"
-                                    type="password"
-                                    label="패스워드 확인"
-                                />
-                                <v-btn
-                                    type="submit"
-                                    color="primary"
-                                    depressed
-                                    large
-                                    class="mr-2"
-                                    :disabled="isInvalid"
-                                >
+                                <srs-text-field v-model="form.password" type="password" label="패스워드" />
+                                <srs-text-field v-model="form.password" type="password" label="패스워드 확인" />
+                                <v-btn type="submit" color="primary" depressed large class="mr-2" :disabled="isInvalid">
                                     가입하기
                                 </v-btn>
-                                <v-btn depressed large @click="onClickClear">
-                                    초기화
-                                </v-btn>
+                                <v-btn depressed large @click="onClickClear">초기화</v-btn>
                             </v-form>
                         </validation-observer>
                     </v-card-text>
 
                     <div class="text-center mt-5">
-                        <router-link class="text-decoration-none" to="/">
-                            Home
-                        </router-link>
+                        <router-link class="text-decoration-none" to="/">Home</router-link>
                         |
-                        <router-link class="text-decoration-none" to="/signIn">
-                            로그인페이지
-                        </router-link>
+                        <router-link class="text-decoration-none" to="/signIn">로그인페이지</router-link>
                     </div>
                 </v-card>
             </v-col>

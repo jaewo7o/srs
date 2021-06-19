@@ -27,19 +27,16 @@ instance.interceptors.response.use(
     function (response) {
         try {
             // Do something with response data
-            return response.data
+            return response.data.body
         } catch (err) {
             console.error('[_axios.interceptors.response] response : ' + err.message)
         }
     },
     async function (error) {
         try {
-            console.log('====>1-1')
-            console.log(error)
-            console.log('====>2-1')
-            console.log(error.response)
-            console.log('====>3-1')
-            let errorCode = error.response.status
+            const res = error.response
+            const body = res.body
+            let errorCode = res.status
             const errorAPI = error.config
 
             if (errorCode === 401) {
@@ -53,10 +50,10 @@ instance.interceptors.response.use(
                 }
             }
             if (errorCode === 403) alert('권한이 없습니다.')
-            if (errorCode === 406) alert(error.response.data.error.message)
+            if (errorCode === 406) alert(body.data.error.message)
             if (errorCode === 500) alert('서버에서 오류가 발생하였습니다.')
 
-            return error.response.data
+            return body.data
         } catch (err) {
             console.error('[_axios.interceptors.response] error : ' + err.message)
         }

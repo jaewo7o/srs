@@ -14,22 +14,17 @@ const routes = [
             {
                 path: '/',
                 name: 'home',
-                component: () =>
-                    import(/* webpackChunkName: "about" */ '../views/Home.vue')
+                component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
             },
             {
                 path: '/about',
                 name: 'about',
-                component: () =>
-                    import(/* webpackChunkName: "about" */ '../views/About.vue')
+                component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
             },
             {
                 path: '/message',
                 name: 'message',
-                component: () =>
-                    import(
-                        /* webpackChunkName: "messages" */ '../views/Message.vue'
-                    )
+                component: () => import(/* webpackChunkName: "messages" */ '../views/Message.vue')
             }
         ]
     },
@@ -40,19 +35,13 @@ const routes = [
             {
                 path: '/signIn',
                 name: 'signIn',
-                component: () =>
-                    import(
-                        /* webpackChunkName: "login" */ '../views/SignIn.vue'
-                    ),
+                component: () => import(/* webpackChunkName: "login" */ '../views/SignIn.vue'),
                 meta: { unauthorized: true }
             },
             {
                 path: '/signUp',
                 name: 'signUp',
-                component: () =>
-                    import(
-                        /* webpackChunkName: "login" */ '../views/SignUp.vue'
-                    ),
+                component: () => import(/* webpackChunkName: "login" */ '../views/SignUp.vue'),
                 meta: { unauthorized: true }
             }
         ]
@@ -66,6 +55,8 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
+    Vue.prototype.$Progress.start()
+
     const accessToken = localStorage.getItem('accessToken')
     const refreshToken = localStorage.getItem('accessToken')
     if (accessToken && !refreshToken) {
@@ -76,7 +67,13 @@ router.beforeEach(async (to, from, next) => {
         return next()
     }
 
+    setTimeout(() => {}, 2000)
+
     return next('/signIn')
+})
+
+router.afterEach(async () => {
+    Vue.prototype.$Progress.finish()
 })
 
 export default router

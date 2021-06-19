@@ -26,17 +26,9 @@ export default {
     actions: {
         async signIn({ commit }, { loginId, password }) {
             const response = await authApi.login({ loginId, password })
-
             if (response.isSuccess) {
-                localStorage.setItem(
-                    'accessToken',
-                    response.data.token.accessToken
-                )
-
-                localStorage.setItem(
-                    'refreshToken',
-                    response.data.token.refreshToken
-                )
+                localStorage.setItem('accessToken', response.data.token.accessToken)
+                localStorage.setItem('refreshToken', response.data.token.refreshToken)
 
                 commit('setLoginSuccess', response.data.user)
                 router.push({ name: 'home' })
