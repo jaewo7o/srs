@@ -38,7 +38,14 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         <srs-text-field v-model="form.key" label="Key" />
-                        <srs-combobox v-model="form.messageType" label="Type" />
+                        {{ form.messageType }}
+                        <srs-combobox
+                            v-model="selectMessageType"
+                            label="Type"
+                            :items="codes.messageType"
+                            item-value="code"
+                            item-text="codeNameKo"
+                        />
                         <srs-text-field v-model="form.contentsKo" label="Korean" />
                         <srs-text-field v-model="form.contentsEn" label="English" />
                     </v-card-text>
@@ -86,6 +93,10 @@ export default {
                 contentsKo: '',
                 contentsEn: ''
             },
+            codes: {
+                messageType: []
+            },
+            selectMessageType: {},
             options: {
                 page: 1,
                 itemsPerPage: 5
@@ -102,8 +113,10 @@ export default {
         }
     },
     async created() {
-        const codes = getCodes('CM001')
+        const codes = await getCodes('CM001')
+        console.log('=====>#1')
         console.log(codes)
+        this.codes.messageType = codes
 
         this.onClickSearch()
     },
@@ -118,6 +131,7 @@ export default {
             this.fetchData()
         },
         async onClickSaveMessage() {
+            this.form.messageType = this.selectMessageType.code
             createMessage(this.form)
         },
         onClickClose() {
