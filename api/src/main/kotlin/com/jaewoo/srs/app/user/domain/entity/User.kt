@@ -22,5 +22,5 @@ class User(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    var id: Long? = null
+    var id: Long = 0L
 }

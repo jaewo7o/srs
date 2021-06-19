@@ -23,6 +23,7 @@ internal class CodeApiControllerTest(
     private val groupCodeRepository: GroupCodeRepository,
     private val codeRepository: CodeRepository
 ) : SpringWebTestSupport() {
+
     val baseUrl = "/api/group-codes"
 
     @Test

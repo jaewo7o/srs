@@ -5,7 +5,7 @@ import com.jaewoo.srs.common.auth.domain.dto.LoginResponse
 import com.jaewoo.srs.common.auth.domain.dto.LoginUser
 import com.jaewoo.srs.common.auth.domain.dto.Token
 import com.jaewoo.srs.common.auth.domain.entity.CacheSession
-import com.jaewoo.srs.common.auth.domain.vo.Session
+import com.jaewoo.srs.common.auth.domain.vo.SessionUser
 import com.jaewoo.srs.common.auth.service.CacheSessionService
 import com.jaewoo.srs.common.auth.service.LoginService
 import com.jaewoo.srs.core.security.jwt.JwtTokenProvider
@@ -38,7 +38,7 @@ class LoginApiController(
 
         // 로그인사용자 Session 생성
         val session = loginUser.let {
-            Session(it.name, it.mobileNo, it.loginId, it.password)
+            SessionUser(it.id, it.name, it.mobileNo, it.loginId, it.password)
         }
 
         val saveSession = cacheSessionService.saveSession(CacheSession(session))
@@ -56,7 +56,7 @@ class LoginApiController(
                 name = loginUser.name,
                 email = loginUser.loginId,
                 mobileNo = loginUser.mobileNo,
-                id = loginUser.id!!
+                id = loginUser.id
             )
         )
     }

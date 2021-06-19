@@ -26,9 +26,9 @@ class JwtAuthenticationFilter(
                 when (it.isNotBlank() && jwtTokenProvider.validateToken(it)) {
                     true -> {
                         val cacheSession = cacheSessionService.getSession(jwtTokenProvider.getSessionId(it))
-                        SrsContext.setSession(cacheSession.session)
+                        SrsContext.setCurrentUser(cacheSession.sessionUser)
 
-                        val userDetail = PrincipalDetails(cacheSession.session)
+                        val userDetail = PrincipalDetails(cacheSession.sessionUser)
                         SecurityContextHolder.getContext().authentication =
                             UsernamePasswordAuthenticationToken(userDetail, "", userDetail.authorities)
                     }

@@ -118,7 +118,7 @@ internal class UserApiControllerTest : SpringWebTestSupport() {
     @Test
     internal fun `사용자 단건 수정`() {
         // given
-        val userId = save(buildUser(name = "oldName")).id!!
+        val userId = save(buildUser(name = "oldName")).id
 
         val dto = UpdateUserRequest(
             name = "newName",

@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.io.Serializable
 
 class PrincipalDetails(
-    private val session: Session
+    private val sessionUser: SessionUser
 ) : UserDetails, Serializable {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf(
@@ -14,9 +14,9 @@ class PrincipalDetails(
         )
     }
 
-    override fun getPassword() = session.password
+    override fun getPassword() = sessionUser.password
 
-    override fun getUsername() = session.loginId
+    override fun getUsername() = sessionUser.loginId
 
     override fun isAccountNonExpired() = true
 
