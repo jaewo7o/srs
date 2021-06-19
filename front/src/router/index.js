@@ -67,12 +67,11 @@ router.beforeEach(async (to, from, next) => {
         return next()
     }
 
-    setTimeout(() => {}, 2000)
-
     return next('/signIn')
 })
 
 router.afterEach(async () => {
+    //  finish the progress bar
     Vue.prototype.$Progress.finish()
 })
 
