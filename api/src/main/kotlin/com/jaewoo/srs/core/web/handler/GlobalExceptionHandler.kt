@@ -2,6 +2,7 @@ package com.jaewoo.srs.core.web.handler
 
 import com.jaewoo.srs.common.message.service.MessageResolveService
 import com.jaewoo.srs.core.exception.SrsDataNotFoundException
+import com.jaewoo.srs.core.exception.SrsEnumRuntimeException
 import com.jaewoo.srs.core.exception.SrsRuntimeException
 import com.jaewoo.srs.core.logging.Log
 import com.jaewoo.srs.core.web.response.BindErrorResponse
@@ -35,12 +36,6 @@ class GlobalExceptionHandler(
         return buildBindErrorResponse(HttpStatus.BAD_REQUEST, "Request Binding Exception", ex.bindingResult)
     }
 
-    @ExceptionHandler(value = [SrsRuntimeException::class])
-    fun handleSrsRuntimeException(ex: SrsRuntimeException): ResponseEntity<*> {
-        val exceptionMessage = messageResolveService.resolveMessage(ex.key)
-        return buildErrorResponse(HttpStatus.NOT_ACCEPTABLE, exceptionMessage, ex)
-    }
-
     @ExceptionHandler(
         HttpClientErrorException.BadRequest::class,
         MissingServletRequestParameterException::class,
@@ -51,16 +46,6 @@ class GlobalExceptionHandler(
         return buildErrorResponse(HttpStatus.BAD_REQUEST, "Bad request", e)
     }
 
-//    @ExceptionHandler(AuthorizationException::class)
-//    fun unauthorizedException(e: Exception): ResponseEntity<ErrorResponse> {
-//        return generateErrorResponse(HttpStatus.FORBIDDEN, "You are not authorized to do this operation", e)
-//    }
-//
-//    @ExceptionHandler(AuthenticationException::class)
-//    fun forbiddenException(e: Exception): ResponseEntity<ErrorResponse> {
-//        return generateErrorResponse(HttpStatus.UNAUTHORIZED, "You are not allowed to do this operation", e)
-//    }
-
     @ExceptionHandler(
         EntityNotFoundException::class,
         NoSuchElementException::class,
@@ -69,7 +54,7 @@ class GlobalExceptionHandler(
         IndexOutOfBoundsException::class,
         KotlinNullPointerException::class
     )
-    fun notFoundException(e: Exception): ResponseEntity<ErrorResponse> {
+    fun handleNotFoundException(e: Exception): ResponseEntity<ErrorResponse> {
         logger.error("Resource not found error", e)
         return buildErrorResponse(HttpStatus.NOT_FOUND, "Resource not found", e)
     }
@@ -79,10 +64,22 @@ class GlobalExceptionHandler(
         return buildErrorResponse(HttpStatus.NOT_FOUND, "Data not found exception", ex)
     }
 
+    @ExceptionHandler(value = [SrsRuntimeException::class])
+    fun handleSrsRuntimeException(ex: SrsRuntimeException): ResponseEntity<*> {
+        val exceptionMessage = messageResolveService.resolveMessage(ex.key)
+        return buildErrorResponse(HttpStatus.NOT_ACCEPTABLE, exceptionMessage, ex)
+    }
+
+    @ExceptionHandler(value = [SrsEnumRuntimeException::class])
+    fun handleSrsEnumRuntimeException(ex: SrsEnumRuntimeException): ResponseEntity<*> {
+        val errorCode = ex.errorCode
+        return buildErrorResponse(HttpStatus.resolve(errorCode.status)!!, errorCode.message, ex)
+    }
+
     @ExceptionHandler(
         Exception::class
     )
-    fun internalServerErrorException(e: Exception): ResponseEntity<ErrorResponse> {
+    fun handleInternalServerError(e: Exception): ResponseEntity<ErrorResponse> {
         logger.error("internal server error", e)
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Generic internal error", e)
     }
@@ -94,13 +91,13 @@ class GlobalExceptionHandler(
     ): ResponseEntity<BindErrorResponse> {
 
         val fieldErrors = bindResult.allErrors
-                .map {
-                    ErrorField(
-                        fieldName = (it as FieldError).field,
-                        errorMessage = it.defaultMessage!!,
-                        bindValue = it.rejectedValue
-                     )
-                }.toList()
+            .map {
+                ErrorField(
+                    fieldName = (it as FieldError).field,
+                    errorMessage = it.defaultMessage!!,
+                    bindValue = it.rejectedValue
+                )
+            }.toList()
 
         val errorResponse = BindErrorResponse(status.value(), message, fieldErrors)
         return ResponseEntity(errorResponse, status)

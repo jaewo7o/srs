@@ -19,8 +19,8 @@ class JwtTokenProvider(
     fun createRefreshToken(sessionId: String) =
         generateToken(sessionId, securityProperties.refreshTokenExpirationMiniute)
 
-    internal fun generateToken(loginId: String, expiredMinute: Long): String {
-        val claims = Jwts.claims().setSubject(loginId)
+    internal fun generateToken(sessionId: String, expiredMinute: Long): String {
+        val claims = Jwts.claims().setSubject(sessionId)
 
         return Jwts.builder()
             .setClaims(claims)

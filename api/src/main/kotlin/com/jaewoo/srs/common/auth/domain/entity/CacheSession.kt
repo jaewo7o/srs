@@ -5,7 +5,10 @@ import org.springframework.data.redis.core.RedisHash
 import java.io.Serializable
 import javax.persistence.Id
 
-@RedisHash("cacheSession")
+@RedisHash(
+    value = "cacheSession",
+    timeToLive = 3600L
+)
 data class CacheSession(
     val sessionUser: SessionUser
 ) : Serializable {

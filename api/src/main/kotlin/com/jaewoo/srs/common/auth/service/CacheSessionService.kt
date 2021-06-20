@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service
 class CacheSessionService(
     private val cacheSessionRepository: CacheSessionRepository
 ) {
-    fun isExistSession(sessionId: String) =
-        cacheSessionRepository.existsById(sessionId)
-
     fun getSession(sessionId: String) =
-        cacheSessionRepository.findById(sessionId).orElseThrow { SrsDataNotFoundException() }
+        getOptSession(sessionId).orElseThrow { SrsDataNotFoundException() }
+
+    fun getOptSession(sessionId: String) =
+        cacheSessionRepository.findById(sessionId)
 
     fun saveSession(cacheSession: CacheSession) = cacheSessionRepository.save(cacheSession)
 }

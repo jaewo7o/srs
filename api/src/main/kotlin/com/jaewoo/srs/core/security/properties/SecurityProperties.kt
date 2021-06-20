@@ -16,6 +16,4 @@ class SecurityProperties {
 
     val headerStringAccessToken = "X-AUTH-ACCESS-TOKEN"
     val headerStringRefreshToken = "X-AUTH-REFRESH-TOKEN"
-
-    val securitySkipUrls = arrayListOf("/api/signin", "/api/signup")
 }

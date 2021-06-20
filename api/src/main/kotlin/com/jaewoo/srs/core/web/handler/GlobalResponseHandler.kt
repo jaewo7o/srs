@@ -31,7 +31,7 @@ class GlobalResponseHandler : ResponseBodyAdvice<Any?> {
         }
 
         if (body is ErrorResponse) {
-            return ResponseEntity<ErrorResponse>(body, HttpStatus.BAD_REQUEST)
+            return ResponseEntity<ErrorResponse>(body, HttpStatus.resolve(body.status)!!)
         } else {
             return ResponseEntity.ok(SuccessResponse(body))
         }
