@@ -5,6 +5,10 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 database/data
+mongo/
+**/test_coverage/
+.DS_Store
+
 
 ### STS ###
 .apt_generated

@@ -28,7 +28,31 @@ services:
         networks:
             - srs-network
         restart: always
-
+    mongodb:
+        container_name: mongodb
+        image: mongo:latest
+        ports:
+            - 27017:27017
+        volumes:
+            - ./mongo:/data
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: srs
+            MONGO_INITDB_ROOT_PASSWORD: srs123!!
+        networks:
+            - srs-network
+        restart: always
+    mongo-express:
+        container_name: mongo-express
+        image: mongo-express:latest
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: srs
+            ME_CONFIG_MONGODB_ADMINPASSWORD: srs123!!
+            ME_CONFIG_MONGODB_SERVER: mongodb
+        networks:
+            - srs-network
+        restart: always
     # application:
     #     container_name: srs-api
     #     image: srs-api:0.0.6
