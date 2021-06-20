@@ -15,7 +15,6 @@ instance.interceptors.request.use(
     async function (config) {
         // Do something before request is sent
         config.headers['X-AUTH-ACCESS-TOKEN'] = localStorage.getItem('accessToken') || ''
-        config.headers['X-AUTH-REFRESH-TOKEN'] = localStorage.getItem('refreshToken') || ''
 
         return config
     },
