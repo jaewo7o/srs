@@ -38,14 +38,7 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         <srs-text-field v-model="form.key" label="Key" />
-                        {{ form.messageType }}
-                        <srs-combobox
-                            v-model="selectMessageType"
-                            label="Type"
-                            :items="codes.messageType"
-                            item-value="code"
-                            item-text="codeNameKo"
-                        />
+                        <srs-combobox v-model="selectMessageType" label="Type" :items="codes.messageType" />
                         <srs-text-field v-model="form.contentsKo" label="Korean" />
                         <srs-text-field v-model="form.contentsEn" label="English" />
                     </v-card-text>
@@ -64,6 +57,7 @@
 import { getMessages, createMessage, deleteMessage } from '@/api/messages'
 import { getCodes } from '@/api/codes'
 import SrsTextField from '@/components/base/SrsTextField.vue'
+import { mapState } from 'vuex'
 
 export default {
     components: { SrsTextField },
@@ -90,6 +84,7 @@ export default {
             form: {
                 id: '',
                 key: '',
+                messageType: '',
                 contentsKo: '',
                 contentsEn: ''
             },
@@ -112,12 +107,11 @@ export default {
             }
         }
     },
+    computed: {
+        ...mapState('system', ['languageCode'])
+    },
     async created() {
-        const codes = await getCodes('CM001')
-        console.log('=====>#1')
-        console.log(codes)
-        this.codes.messageType = codes
-
+        this.codes.messageType = await getCodes('CM001')
         this.onClickSearch()
     },
     methods: {
@@ -138,7 +132,6 @@ export default {
             this.isOpenDialog = false
         },
         async onClickNewMessage() {
-            console.log('====>')
             this.isOpenDialog = true
         },
         async onClickUpdateMessage(item) {

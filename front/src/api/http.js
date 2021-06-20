@@ -5,6 +5,7 @@ import router from '../router'
 // HTTP STATUS CODE
 const BAD_REQUEST = 400
 const UNAUTHORIZED = 401
+const INTERNAL_SERVER_ERROR = 500
 
 const instance = axios.create({
     baseURL: process.env.VUE_APP_API_URL,
@@ -31,7 +32,6 @@ instance.interceptors.response.use(
             // Do something with response data
             console.log('sucess in')
             console.log(response.data.body)
-            console.log('#######')
             return response.data.body
         } catch (err) {
             console.error('[_axios.interceptors.response] response : ' + err.message)
@@ -61,7 +61,7 @@ instance.interceptors.response.use(
                     alert('권한이 없습니다.')
                 } else if (status === 406) {
                     alert(body.data.error.message)
-                } else if (status === 500) {
+                } else if (status === INTERNAL_SERVER_ERROR) {
                     alert('서버에서 오류가 발생하였습니다.')
                 }
             }

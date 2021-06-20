@@ -5,6 +5,7 @@
             <v-combobox
                 :dense="dense"
                 :outlined="outlined"
+                label=""
                 :solo="solo"
                 v-bind="$attrs"
                 v-on="$listeners"
