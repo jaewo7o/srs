@@ -74,6 +74,7 @@ export default {
                     { text: 'Key', value: 'key', align: 'center' },
                     { text: 'Korean', value: 'contentsKo', align: 'start' },
                     { text: 'English', value: 'contentsEn', align: 'start' },
+                    { text: 'Modify Datetime', value: 'updatedAt', align: 'center' },
                     { text: 'Modify', value: 'update', align: 'center' },
                     { text: 'Delete', value: 'delete', align: 'center' }
                 ],
