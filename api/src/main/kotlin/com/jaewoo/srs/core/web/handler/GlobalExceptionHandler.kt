@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.client.HttpClientErrorException
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.util.*
 import javax.persistence.EntityNotFoundException
 import javax.persistence.NoResultException
 
@@ -66,7 +67,7 @@ class GlobalExceptionHandler(
 
     @ExceptionHandler(value = [SrsRuntimeException::class])
     fun handleSrsRuntimeException(ex: SrsRuntimeException): ResponseEntity<*> {
-        val exceptionMessage = messageResolveService.resolveMessage(ex.key)
+        val exceptionMessage = messageResolveService.resolveMessage(ex.key, Locale.KOREAN, ex.params)
         return buildErrorResponse(HttpStatus.NOT_ACCEPTABLE, exceptionMessage, ex)
     }
 
