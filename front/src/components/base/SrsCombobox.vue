@@ -7,7 +7,7 @@
                 :outlined="outlined"
                 label=""
                 :solo="solo"
-                v-bind="$attrs"
+                v-bind="attrs"
                 v-on="$listeners"
                 :error-messages="errors"
             ></v-combobox>
@@ -39,6 +39,18 @@ export default {
         rules: {
             type: Object,
             default: null
+        }
+    },
+    computed: {
+        attrs() {
+            //console.log('attr start')
+            //console.log(this.$attrs)
+            //let valueObject = this.$attrs.value
+            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+            //this.$attrs['value'] = valueObject.value
+            //console.log(this.$attrs)
+            //console.log('attr end')
+            return this.$attrs
         }
     }
 }

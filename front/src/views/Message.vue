@@ -82,7 +82,6 @@ export default {
             },
             isOpenDialog: false,
             form: {
-                id: '',
                 key: '',
                 messageType: '',
                 contentsKo: '',
@@ -125,8 +124,12 @@ export default {
             this.fetchData()
         },
         async onClickSaveMessage() {
-            this.form.messageType = this.selectMessageType.code
-            createMessage(this.form)
+            this.form.messageType = this.selectMessageType.value
+            const result = await createMessage(this.form)
+            if (result.isSuccess) {
+                this.isOpenDialog = false
+                this.fetchData()
+            }
         },
         onClickClose() {
             this.isOpenDialog = false
