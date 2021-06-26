@@ -42,6 +42,8 @@ class Application {
         val user = User(
             name = "Jaewoo Jung",
             mobileNo = "010-9910-9999",
+            languageCode = "ko",
+            timezoneName = "America/Los_Angeles",
             loginId = "jeawoo.jeong@gmail.com",
             password = encodePassword.encode("1234")
         )

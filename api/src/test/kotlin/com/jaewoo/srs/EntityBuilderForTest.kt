@@ -10,11 +10,15 @@ import com.jaewoo.srs.common.message.domain.enum.MessageType
 fun buildUser(
     name: String = "name",
     mobileNo: String = "mobileNo",
+    languageCode: String = "ko",
+    timezoneName: String = "Asia/Seoul",
     loginId: String = "jeawoo.jeong@gmail.com",
     password: String = "1234"
 ) = User(
     name = name,
     mobileNo = mobileNo,
+    languageCode = languageCode,
+    timezoneName = timezoneName,
     loginId = loginId,
     password = password
 )

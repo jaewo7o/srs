@@ -14,6 +14,12 @@ data class CreateUserRequest(
     @ApiModelProperty(value = "핸드폰번호")
     val mobileNo: String,
 
+    @ApiModelProperty(value = "언어코드")
+    val languageCode: String,
+
+    @ApiModelProperty(value = "Timezone")
+    val timezoneName: String,
+
     @ApiModelProperty(value = "로그인ID", required = true, example = "jeawoo.jeong@gmail.com")
     @field:NotBlank
     val loginId: String,
@@ -25,6 +31,8 @@ data class CreateUserRequest(
     fun toEntity() = User(
         name = name,
         mobileNo = mobileNo,
+        languageCode = languageCode,
+        timezoneName = timezoneName,
         loginId = loginId,
         password = password
     )

@@ -7,11 +7,15 @@ import com.jaewoo.srs.common.code.domain.dto.CreateGroupCodeRequest
 fun buildCreateUserRequest(
     name: String = "name",
     mobileNo: String = "mobileNo",
+    languageCode: String = "ko",
+    timezoneName: String = "Asia/Seoul",
     loginId: String = "testuser@gmail.com",
     password: String = "1234"
 ) = CreateUserRequest(
     name = name,
     mobileNo = mobileNo,
+    languageCode = languageCode,
+    timezoneName = timezoneName,
     loginId = loginId,
     password = password
 )

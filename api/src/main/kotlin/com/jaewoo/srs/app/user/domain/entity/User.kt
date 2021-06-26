@@ -12,6 +12,12 @@ class User(
     @Column(name = "mobile_no", nullable = true)
     var mobileNo: String,
 
+    @Column(name = "language_code", nullable = false)
+    var languageCode: String,
+
+    @Column(name = "timezone_name", nullable = false)
+    var timezoneName: String,
+
     @Column(name = "login_id", nullable = false)
     var loginId: String,
 

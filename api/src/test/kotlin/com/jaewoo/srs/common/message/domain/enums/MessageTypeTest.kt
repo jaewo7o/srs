@@ -19,17 +19,4 @@ internal class MessageTypeTest() : SpringTestSupport() {
         Assertions.assertThat(serializeResult).isNotEmpty()
         Assertions.assertThat(serializeResult.contains(messageType.getCode())).isTrue()
     }
-
-    @Test
-    fun `Json Deserialize Test`() {
-        // given
-        val messageTypeValue = "{ \"messageType\" : \"UM\" }"
-
-        // when
-        val messageType = objectMapper.readValue(messageTypeValue, MessageType::class.java)
-
-        // then
-        Assertions.assertThat(messageType).isNotNull()
-        Assertions.assertThat(messageType).isEqualTo(MessageType.UI_MESSAGE)
-    }
 }
