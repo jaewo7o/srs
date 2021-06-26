@@ -1,5 +1,6 @@
 package com.jaewoo.srs.core.test
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,6 +17,9 @@ class SpringTestSupport {
 
     @Autowired
     private lateinit var entityManager: EntityManager
+
+    @Autowired
+    lateinit var objectMapper: ObjectMapper
 
     protected val query: JPAQueryFactory by lazy { JPAQueryFactory(entityManager) }
 

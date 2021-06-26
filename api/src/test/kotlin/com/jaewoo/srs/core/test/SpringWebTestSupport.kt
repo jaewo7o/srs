@@ -1,8 +1,8 @@
 package com.jaewoo.srs.core.test
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.jaewoo.srs.common.auth.domain.vo.SessionUser
 import com.jaewoo.srs.core.context.SrsContext
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,9 +29,6 @@ import org.springframework.web.filter.CharacterEncodingFilter
 class SpringWebTestSupport : SpringTestSupport() {
 
     @Autowired
-    protected lateinit var objectMapper: ObjectMapper
-
-    @Autowired
     protected lateinit var restdocs: RestDocsConfiguration
 
     @Autowired
@@ -45,6 +42,21 @@ class SpringWebTestSupport : SpringTestSupport() {
 
     protected val classpath = "classpath:"
 
+    companion object {
+        @BeforeAll
+        @JvmStatic
+        fun initSession() {
+            var sessionUser = SessionUser(
+                4L,
+                name = "Jung Jaewoo",
+                mobileNo = "010-9910-2227",
+                loginId = "jeawoo.jeong@gmail.com",
+                password = ""
+            )
+
+            SrsContext.setCurrentUser(sessionUser)
+        }
+    }
 
     @BeforeEach
     fun setUp(context: WebApplicationContext, provider: RestDocumentationContextProvider) {
@@ -55,16 +67,6 @@ class SpringWebTestSupport : SpringTestSupport() {
             .alwaysDo<DefaultMockMvcBuilder>(MockMvcResultHandlers.print())
             .alwaysDo<DefaultMockMvcBuilder>(restdocs.write())
             .build()
-
-        var sessionUser = SessionUser(
-            4L,
-            name = "Jung Jaewoo",
-            mobileNo = "010-9910-2227",
-            loginId = "jeawoo.jeong@gmail.com",
-            password = ""
-        )
-
-        SrsContext.setCurrentUser(sessionUser)
     }
 }
 
