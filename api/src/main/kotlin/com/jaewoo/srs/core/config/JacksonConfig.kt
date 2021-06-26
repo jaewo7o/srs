@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Primary
 import java.io.IOException
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 
@@ -30,6 +31,7 @@ class JacksonConfig {
 
         javaTimeModule.addSerializer(LocalDate::class.java, LocalDateSerializer())
         javaTimeModule.addSerializer(LocalDateTime::class.java, LocalDateTimeSerializer())
+        javaTimeModule.addSerializer(ZonedDateTime::class.java, ZonedDateTimeSerializer())
         javaTimeModule.addDeserializer(LocalDate::class.java, LocalDateDeserializer())
         javaTimeModule.addDeserializer(LocalDateTime::class.java, LocalDateTimeDeserializer())
 
@@ -58,6 +60,12 @@ class JacksonConfig {
 
     class LocalDateTimeSerializer : JsonSerializer<LocalDateTime>() {
         override fun serialize(value: LocalDateTime, gen: JsonGenerator?, p2: SerializerProvider?) {
+            gen!!.writeString(value.format(DATETIME_FORMAT))
+        }
+    }
+
+    class ZonedDateTimeSerializer : JsonSerializer<ZonedDateTime>() {
+        override fun serialize(value: ZonedDateTime, gen: JsonGenerator?, p2: SerializerProvider?) {
             gen!!.writeString(value.format(DATETIME_FORMAT))
         }
     }

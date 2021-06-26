@@ -5,6 +5,7 @@ import com.jaewoo.srs.common.message.dao.MessageRepository
 import com.jaewoo.srs.common.message.dao.MessageRepositorySupport
 import com.jaewoo.srs.common.message.domain.dto.CreateMessageRequest
 import com.jaewoo.srs.common.message.domain.dto.SearchMessageRequest
+import com.jaewoo.srs.common.message.domain.dto.SearchMessageResponse
 import com.jaewoo.srs.common.message.domain.dto.UpdateMessageRequest
 import com.jaewoo.srs.common.message.domain.entity.Message
 import com.jaewoo.srs.core.exception.SrsDataNotFoundException
@@ -52,7 +53,7 @@ class MessageService(
             .orElseThrow { SrsDataNotFoundException() }
     }
 
-    fun searchMessage(dto: SearchMessageRequest, pageable: Pageable): Page<Message> {
+    fun searchMessage(dto: SearchMessageRequest, pageable: Pageable): Page<SearchMessageResponse> {
         val predicate = MessagePredicator()
             .key(dto.key)
             .contents(dto.contents)

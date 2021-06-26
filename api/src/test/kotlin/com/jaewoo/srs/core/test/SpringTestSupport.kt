@@ -1,7 +1,10 @@
 package com.jaewoo.srs.core.test
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.jaewoo.srs.common.auth.domain.vo.SessionUser
+import com.jaewoo.srs.core.context.SrsContext
 import com.querydsl.jpa.impl.JPAQueryFactory
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -40,5 +43,23 @@ class SpringTestSupport {
     private fun flushAndClearPersistentContext() {
         entityManager.flush()
         entityManager.clear()
+    }
+
+    companion object {
+        @BeforeAll
+        @JvmStatic
+        fun initSession() {
+            var sessionUser = SessionUser(
+                4L,
+                name = "Jung Jaewoo",
+                mobileNo = "010-9910-2227",
+                languageCode = "ko",
+                timezoneName = "America/Los_Angeles",
+                loginId = "jeawoo.jeong@gmail.com",
+                password = ""
+            )
+
+            SrsContext.setCurrentUser(sessionUser)
+        }
     }
 }

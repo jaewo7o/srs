@@ -1,5 +1,6 @@
 package com.jaewoo.srs.app.user.domain.entity
 
+import com.jaewoo.srs.common.auth.domain.vo.SessionUser
 import com.jaewoo.srs.core.jpa.entity.BaseEntity
 import javax.persistence.*
 
@@ -29,4 +30,14 @@ class User(
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     var id: Long = 0L
+
+    fun toSessionUser() = SessionUser(
+        id = this.id,
+        name = this.name,
+        mobileNo = this.mobileNo,
+        languageCode = this.languageCode,
+        timezoneName = this.timezoneName,
+        loginId = this.loginId,
+        password = this.password
+    )
 }

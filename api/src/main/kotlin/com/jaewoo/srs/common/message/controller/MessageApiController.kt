@@ -2,6 +2,7 @@ package com.jaewoo.srs.common.message.controller
 
 import com.jaewoo.srs.common.message.domain.dto.CreateMessageRequest
 import com.jaewoo.srs.common.message.domain.dto.SearchMessageRequest
+import com.jaewoo.srs.common.message.domain.dto.SearchMessageResponse
 import com.jaewoo.srs.common.message.domain.dto.UpdateMessageRequest
 import com.jaewoo.srs.common.message.domain.entity.Message
 import com.jaewoo.srs.common.message.service.MessageService
@@ -55,7 +56,7 @@ class MessageApiController(
 
     @ApiOperation(value = "다국어메세지 검색", notes = "검색조건에 맞는 다국어메시지를 조회한다.")
     @GetMapping
-    fun searchMessage(dto: SearchMessageRequest, pageable: Pageable): Page<Message> {
+    fun searchMessage(dto: SearchMessageRequest, pageable: Pageable): Page<SearchMessageResponse> {
         return messageService.searchMessage(dto, pageable)
     }
 

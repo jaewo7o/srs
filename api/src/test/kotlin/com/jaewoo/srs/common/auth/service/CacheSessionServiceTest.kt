@@ -2,7 +2,6 @@ package com.jaewoo.srs.common.auth.service
 
 import com.jaewoo.srs.app.user.buildUser
 import com.jaewoo.srs.common.auth.domain.entity.CacheSession
-import com.jaewoo.srs.common.auth.domain.vo.SessionUser
 import com.jaewoo.srs.core.test.SpringTestSupport
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -19,9 +18,7 @@ internal class CacheSessionServiceTest(
         val loginUser = buildUser()
 
         // 로그인사용자 Session 생성
-        val session = loginUser.let {
-            SessionUser(it.id, it.name, it.mobileNo, it.loginId, it.password)
-        }
+        val session = loginUser.toSessionUser()
 
         // when
         val saveSession = cacheSessionService.saveSession(CacheSession(session))

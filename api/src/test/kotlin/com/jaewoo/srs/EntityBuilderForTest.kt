@@ -27,12 +27,16 @@ fun buildSessionUser(
     id: Long = 1L,
     name: String = "name",
     mobileNo: String = "mobileNo",
+    languageCode: String = "ko",
+    timezoneName: String = "Asia/Seoul",
     loginId: String = "loginId",
     password: String = "password"
 ) = SessionUser(
     id = id,
     name = name,
     mobileNo = mobileNo,
+    languageCode = languageCode,
+    timezoneName = timezoneName,
     loginId = loginId,
     password = password
 )
