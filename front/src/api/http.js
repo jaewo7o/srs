@@ -28,45 +28,37 @@ instance.interceptors.request.use(
 // Add a response interceptor
 instance.interceptors.response.use(
     function (response) {
-        try {
-            // Do something with response data
-            console.log('sucess in')
-            console.log(response.data.body)
-            return response.data.body
-        } catch (err) {
-            console.error('[_axios.interceptors.response] response : ' + err.message)
-        }
+        // Do something with response data
+        //            console.log('sucess in')
+        //            console.log(response.data.body)
+        return response.data.body
     },
     async function (error) {
-        try {
-            console.log('error in')
-            if (error.response) {
-                const { config, status, body } = error.response
+        console.log('error in')
+        if (error.response) {
+            const { config, status, data } = error.response
 
-                if (status === BAD_REQUEST) {
-                    alert(body.data.error.message)
-                } else if (status === UNAUTHORIZED) {
-                    if (config.retry) {
-                        config.retry = true
-                        await reissueAccessToken()
-                        return await instance(config)
-                    } else {
-                        localStorage.removeItem('accessToken')
-                        localStorage.removeItem('refreshToken')
+            if (status === BAD_REQUEST) {
+                alert(data.body.message)
+            } else if (status === UNAUTHORIZED) {
+                if (config.retry) {
+                    config.retry = true
+                    await reissueAccessToken()
+                    return await instance(config)
+                } else {
+                    localStorage.removeItem('accessToken')
+                    localStorage.removeItem('refreshToken')
 
-                        alert('인증이 만료되었습니다.')
-                        router.push({ name: 'signIn' })
-                    }
-                } else if (status === 403) {
-                    alert('권한이 없습니다.')
-                } else if (status === 406) {
-                    alert(body.data.error.message)
-                } else if (status === INTERNAL_SERVER_ERROR) {
-                    alert('서버에서 오류가 발생하였습니다.')
+                    alert('인증이 만료되었습니다.')
+                    router.push({ name: 'signIn' })
                 }
+            } else if (status === 403) {
+                alert('권한이 없습니다.')
+            } else if (status === 406) {
+                alert(data.body.message)
+            } else if (status === INTERNAL_SERVER_ERROR) {
+                alert('서버에서 오류가 발생하였습니다.')
             }
-        } catch (err) {
-            console.error('[_axios.interceptors.response] error : ' + err.message)
         }
     }
 )
