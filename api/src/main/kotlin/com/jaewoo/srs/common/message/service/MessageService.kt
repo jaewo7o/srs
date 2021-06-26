@@ -25,7 +25,7 @@ class MessageService(
 
         val isExists = this.messageRepository.existsByKey(message.key)
         if (isExists) {
-            throw SrsRuntimeException("MSG0002")
+            throw SrsRuntimeException("MSG0002", message.key)
         }
 
         return messageRepository.save(message)

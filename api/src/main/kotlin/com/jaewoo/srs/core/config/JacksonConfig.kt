@@ -33,11 +33,22 @@ class JacksonConfig {
         javaTimeModule.addDeserializer(LocalDate::class.java, LocalDateDeserializer())
         javaTimeModule.addDeserializer(LocalDateTime::class.java, LocalDateTimeDeserializer())
 
+        //val simpleModule = SimpleModule()
+        //simpleModule.addSerializer(BaseEnum::class.java, BaseEnumSerializer())
+        //simpleModule.addDeserializer(BaseEnum::class.java, BaseEnumDeserializer())
+
         objectMapper.registerModule(javaTimeModule)
+//        objectMapper.registerModule(simpleModule)
         objectMapper.registerModule(KotlinModule())
 
         return objectMapper
     }
+
+//    class BaseEnumSerializer : JsonSerializer<BaseEnum>() {
+//        override fun serialize(value: BaseEnum, gen: JsonGenerator?, p2: SerializerProvider?) {
+//            gen!!.writeString(value.getCode())
+//        }
+//    }
 
     class LocalDateSerializer : JsonSerializer<LocalDate>() {
         override fun serialize(value: LocalDate, gen: JsonGenerator?, p2: SerializerProvider?) {
@@ -53,15 +64,22 @@ class JacksonConfig {
 
     class LocalDateDeserializer : JsonDeserializer<LocalDate>() {
         @Throws(IOException::class)
-        override fun deserialize(value: JsonParser, ctx: DeserializationContext?): LocalDate {
-            return LocalDate.parse(value.valueAsString, DATE_FORMAT)
+        override fun deserialize(parser: JsonParser, ctx: DeserializationContext?): LocalDate {
+            return LocalDate.parse(parser.valueAsString, DATE_FORMAT)
         }
     }
 
     class LocalDateTimeDeserializer : JsonDeserializer<LocalDateTime>() {
         @Throws(IOException::class)
-        override fun deserialize(value: JsonParser, ctx: DeserializationContext?): LocalDateTime {
-            return LocalDateTime.parse(value.valueAsString, DATETIME_FORMAT)
+        override fun deserialize(parser: JsonParser, ctx: DeserializationContext?): LocalDateTime {
+            return LocalDateTime.parse(parser.valueAsString, DATETIME_FORMAT)
         }
     }
+
+//    class BaseEnumDeserializer : JsonDeserializer<EnumClass<out BaseEnum>>() {
+//        //    override fun deserialize(parser: JsonParser, p1: DeserializationContext?): BaseEnum {
+//        //      return Enum.
+//        // }
+//    }
+
 }
