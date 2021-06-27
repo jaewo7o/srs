@@ -24,7 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 @SpringBootApplication
 class Application {
     companion object : Log
-
+    
     @Bean
     fun databaseInitializer(
         userRepository: UserRepository,
