@@ -1,8 +1,8 @@
 package com.jaewoo.srs.core.auth.controller
 
+import com.jaewoo.srs.SpringWebTestSupport
 import com.jaewoo.srs.app.user.buildCreateUserRequest
 import com.jaewoo.srs.common.auth.domain.dto.LoginRequest
-import com.jaewoo.srs.core.test.SpringWebTestSupport
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder

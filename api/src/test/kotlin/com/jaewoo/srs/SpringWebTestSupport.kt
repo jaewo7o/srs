@@ -1,4 +1,4 @@
-package com.jaewoo.srs.core.test
+package com.jaewoo.srs
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith

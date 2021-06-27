@@ -1,5 +1,6 @@
 package com.jaewoo.srs.common.code.controller
 
+import com.jaewoo.srs.SpringWebTestSupport
 import com.jaewoo.srs.app.user.buildCode
 import com.jaewoo.srs.app.user.buildCreateCodeRequest
 import com.jaewoo.srs.app.user.buildCreateGroupCodeRequest
@@ -10,7 +11,6 @@ import com.jaewoo.srs.common.code.domain.dto.UpdateCodeRequest
 import com.jaewoo.srs.common.code.domain.dto.UpdateGroupCodeRequest
 import com.jaewoo.srs.common.code.domain.entity.CodeKey
 import com.jaewoo.srs.core.exception.SrsDataNotFoundException
-import com.jaewoo.srs.core.test.SpringWebTestSupport
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType

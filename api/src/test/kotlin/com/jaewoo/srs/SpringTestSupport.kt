@@ -1,4 +1,4 @@
-package com.jaewoo.srs.core.test
+package com.jaewoo.srs
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jaewoo.srs.common.auth.domain.vo.SessionUser
@@ -50,7 +50,7 @@ class SpringTestSupport {
         @JvmStatic
         fun initSession() {
             var sessionUser = SessionUser(
-                4L,
+                0L,
                 name = "Jung Jaewoo",
                 mobileNo = "010-9910-2227",
                 languageCode = "ko",

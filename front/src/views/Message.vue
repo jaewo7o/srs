@@ -20,15 +20,9 @@
             :options.sync="options"
             :server-items-length="messageDataTable.totalCount"
         >
-            <template v-slot:[`item.update`]="{ item }">
-                <v-btn icon @click="onClickUpdateMessage(item)">
-                    <v-icon>mdi-pencil</v-icon>
-                </v-btn>
-            </template>
-            <template v-slot:[`item.delete`]="{ item }">
-                <v-btn icon @click="onClickDeleteMessage(item)">
-                    <v-icon>mdi-delete</v-icon>
-                </v-btn>
+            <template v-slot:[`item.actions`]="{ item }">
+                <v-icon small class="mr-2" @click="onClickUpdateMessage(item)">mdi-pencil</v-icon>
+                <v-icon small @click="onClickDeleteMessage(item)">mdi-delete</v-icon>
             </template>
         </srs-data-table>
         <v-dialog max-width="600" v-model="isOpenDialog">
@@ -75,8 +69,7 @@ export default {
                     { text: 'Korean', value: 'contentsKo', align: 'start' },
                     { text: 'English', value: 'contentsEn', align: 'start' },
                     { text: 'Modify Datetime', value: 'updatedAt', align: 'center' },
-                    { text: 'Modify', value: 'update', align: 'center' },
-                    { text: 'Delete', value: 'delete', align: 'center' }
+                    { text: 'Actions', value: 'actions', sortable: false }
                 ],
                 items: [],
                 totalCount: 0

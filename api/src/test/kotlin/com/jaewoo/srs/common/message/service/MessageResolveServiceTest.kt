@@ -1,7 +1,7 @@
 package com.jaewoo.srs.common.message.service
 
+import com.jaewoo.srs.SpringTestSupport
 import com.jaewoo.srs.app.user.buildMessage
-import com.jaewoo.srs.core.test.SpringTestSupport
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.transaction.annotation.Transactional

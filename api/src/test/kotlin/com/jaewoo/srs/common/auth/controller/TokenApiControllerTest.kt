@@ -1,11 +1,11 @@
 package com.jaewoo.srs.common.auth.controller
 
+import com.jaewoo.srs.SpringWebTestSupport
 import com.jaewoo.srs.app.user.buildSessionUser
 import com.jaewoo.srs.common.auth.domain.entity.CacheSession
 import com.jaewoo.srs.common.auth.service.CacheSessionService
 import com.jaewoo.srs.core.security.jwt.JwtTokenProvider
 import com.jaewoo.srs.core.security.properties.SecurityProperties
-import com.jaewoo.srs.core.test.SpringWebTestSupport
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.post
 

@@ -1,7 +1,7 @@
 package com.jaewoo.srs.common.message.domain.enums
 
+import com.jaewoo.srs.SpringTestSupport
 import com.jaewoo.srs.common.message.domain.enum.MessageType
-import com.jaewoo.srs.core.test.SpringTestSupport
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 

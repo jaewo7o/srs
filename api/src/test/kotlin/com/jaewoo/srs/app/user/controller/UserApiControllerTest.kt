@@ -1,10 +1,10 @@
 package com.jaewoo.srs.app.user.controller
 
+import com.jaewoo.srs.SpringWebTestSupport
 import com.jaewoo.srs.app.user.buildCreateUserRequest
 import com.jaewoo.srs.app.user.buildUser
 import com.jaewoo.srs.app.user.domain.dto.UpdateUserRequest
 import com.jaewoo.srs.app.user.domain.entity.QUser
-import com.jaewoo.srs.core.test.SpringWebTestSupport
 import org.assertj.core.api.BDDAssertions.then
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType

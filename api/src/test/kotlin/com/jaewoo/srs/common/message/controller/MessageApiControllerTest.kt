@@ -1,11 +1,11 @@
 package com.jaewoo.srs.common.message.controller
 
+import com.jaewoo.srs.SpringWebTestSupport
 import com.jaewoo.srs.app.user.buildMessage
 import com.jaewoo.srs.common.message.dao.MessageRepository
 import com.jaewoo.srs.common.message.domain.dto.CreateMessageRequest
 import com.jaewoo.srs.common.message.domain.dto.UpdateMessageRequest
 import com.jaewoo.srs.common.message.domain.enum.MessageType
-import com.jaewoo.srs.core.test.SpringWebTestSupport
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType

@@ -1,6 +1,6 @@
 package com.jaewoo.srs.app.test.controller
 
-import com.jaewoo.srs.core.test.SpringWebTestSupport
+import com.jaewoo.srs.SpringWebTestSupport
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 

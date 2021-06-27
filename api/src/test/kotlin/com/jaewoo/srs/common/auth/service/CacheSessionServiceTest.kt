@@ -1,8 +1,8 @@
 package com.jaewoo.srs.common.auth.service
 
+import com.jaewoo.srs.SpringTestSupport
 import com.jaewoo.srs.app.user.buildUser
 import com.jaewoo.srs.common.auth.domain.entity.CacheSession
-import com.jaewoo.srs.core.test.SpringTestSupport
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.transaction.annotation.Transactional
