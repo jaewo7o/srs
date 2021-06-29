@@ -34,4 +34,8 @@ class FoodStore() {
         this.foodType = foodType
         foodType.foodStores.add(this)
     }
+
+    override fun toString(): String {
+        return "FoodStore(id=$id, storeName='$storeName', rate=$rate, ownerName='$ownerName')"
+    }
 }
