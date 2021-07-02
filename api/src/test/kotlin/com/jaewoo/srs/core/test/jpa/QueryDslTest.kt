@@ -4,10 +4,12 @@ import com.jaewoo.srs.SpringTestSupport
 import com.jaewoo.srs.app.test.dao.FoodStoreRepository
 import com.jaewoo.srs.app.test.dao.FoodTypeRepository
 import com.jaewoo.srs.app.test.domain.dto.QSearchFoodStoreResponse
+import com.jaewoo.srs.app.test.domain.dto.SearchFoodStoreResponse
 import com.jaewoo.srs.app.test.domain.entity.FoodStore
 import com.jaewoo.srs.app.test.domain.entity.FoodType
 import com.jaewoo.srs.app.test.domain.entity.QFoodStore.foodStore
 import com.jaewoo.srs.app.test.domain.entity.QFoodType.foodType
+import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.core.types.dsl.CaseBuilder
 import com.querydsl.jpa.JPAExpressions
 import org.assertj.core.api.Assertions
@@ -217,5 +219,55 @@ class QueryDslTest(
 
         // then
         fetch.forEach { println(it) }
+    }
+
+    @Test
+    fun `동적 쿼리`() {
+        // given & when
+        val fetch = searchQuery("삼", 5)
+
+        // then
+        fetch?.forEach { println(it) }
+        Assertions.assertThat(fetch?.size).isEqualTo(1)
+        Assertions.assertThat(fetch).extracting("storeName").containsExactly("삼겹살")
+
+        // given & when
+        val fetch2 = searchQuery("", null)
+
+        // then
+        fetch2?.forEach { println(it) }
+        Assertions.assertThat(fetch2?.size).isEqualTo(10)
+    }
+
+    fun searchQuery(searchStoreName: String, searchRate: Int?): MutableList<SearchFoodStoreResponse>? {
+        return query
+            .select(
+                QSearchFoodStoreResponse(
+                    foodStore.storeName,
+                    foodStore.rate,
+                    foodStore.ownerName,
+                    foodType.foodTypeName,
+                    foodType.foodOrder
+                )
+            )
+            .from(foodStore)
+            .join(foodType).on(foodType.eq(foodStore.foodType))
+            .where(
+                storeNameContains(searchStoreName),
+                overThanRate(searchRate)
+            )
+            .fetch()
+    }
+
+    fun storeNameContains(storeName: String?): BooleanExpression? {
+        return storeName?.let {
+            foodStore.storeName.contains(storeName)
+        }
+    }
+
+    fun overThanRate(rate: Int?): BooleanExpression? {
+        return rate?.let {
+            foodStore.rate.goe(rate)
+        }
     }
 }
