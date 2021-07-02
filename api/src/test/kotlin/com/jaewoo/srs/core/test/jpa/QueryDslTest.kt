@@ -3,10 +3,13 @@ package com.jaewoo.srs.core.test.jpa
 import com.jaewoo.srs.SpringTestSupport
 import com.jaewoo.srs.app.test.dao.FoodStoreRepository
 import com.jaewoo.srs.app.test.dao.FoodTypeRepository
+import com.jaewoo.srs.app.test.domain.dto.QSearchFoodStoreResponse
 import com.jaewoo.srs.app.test.domain.entity.FoodStore
 import com.jaewoo.srs.app.test.domain.entity.FoodType
 import com.jaewoo.srs.app.test.domain.entity.QFoodStore.foodStore
 import com.jaewoo.srs.app.test.domain.entity.QFoodType.foodType
+import com.querydsl.core.types.dsl.CaseBuilder
+import com.querydsl.jpa.JPAExpressions
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -110,7 +113,7 @@ class QueryDslTest(
     }
 
     @Test
-    fun `연관관계 없는 조인`() {
+    fun `연관관계 없는 inner join on`() {
         // given & when
         val fetch = query
             .select(foodStore)
@@ -119,6 +122,100 @@ class QueryDslTest(
             .fetch()
 
         // then
+        fetch.forEach { println(it) }
         Assertions.assertThat(fetch.size).isEqualTo(2)
+    }
+
+    @Test
+    fun `left join on`() {
+        // given & when
+        val fetch = query
+            .select(foodStore, foodType)
+            .from(foodStore)
+            .leftJoin(foodType).on(foodStore.rate.eq(foodType.foodOrder))
+            .fetch()
+
+        // then
+        fetch.forEach { println(it) }
+        Assertions.assertThat(fetch.size).isEqualTo(10)
+    }
+
+    @Test
+    fun `subquery`() {
+        // given & when
+        val fetch = query
+            .select(foodStore)
+            .from(foodStore)
+            .where(
+                foodStore.rate.`in`(
+                    JPAExpressions
+                        .select(foodType.foodOrder.max())
+                        .from(foodType)
+                )
+            )
+            .fetch()
+
+        // then
+        fetch.forEach { println(it) }
+        Assertions.assertThat(fetch.size).isEqualTo(1)
+    }
+
+    @Test
+    fun `case when`() {
+        // given & when
+        val fetch = query
+            .select(
+                foodStore.rate
+                    .`when`(10).then("최고의 맛")
+                    .`when`(9).then("좋은 맛")
+                    .otherwise("보통")
+            )
+            .from(foodStore)
+            .orderBy(foodStore.rate.desc())
+            .fetch()
+
+        // then
+        fetch.forEach { println(it) }
+        Assertions.assertThat(fetch.get(0)).isEqualTo("최고의 맛")
+    }
+
+    @Test
+    fun `case builder`() {
+        // given & when
+        val fetch = query
+            .select(
+                CaseBuilder()
+                    .`when`(foodStore.rate.goe(8)).then("최고의 맛")
+                    .`when`(foodStore.rate.goe(4)).then("좋은 맛")
+                    .otherwise("보통")
+            )
+            .from(foodStore)
+            .orderBy(foodStore.rate.desc())
+            .fetch()
+
+        // then
+        fetch.forEach { println(it) }
+        Assertions.assertThat(fetch.get(0)).isEqualTo("최고의 맛")
+    }
+
+    @Test
+    fun `DTO로 결과 받기`() {
+        // given & when
+        val fetch = query
+            .select(
+                QSearchFoodStoreResponse(
+                    foodStore.storeName,
+                    foodStore.rate,
+                    foodStore.ownerName,
+                    foodType.foodTypeName,
+                    foodType.foodOrder
+                )
+            )
+            .from(foodStore)
+            .join(foodType).on(foodType.eq(foodStore.foodType))
+            .fetch()
+
+        // then
+        fetch.forEach { println(it) }
     }
 }
