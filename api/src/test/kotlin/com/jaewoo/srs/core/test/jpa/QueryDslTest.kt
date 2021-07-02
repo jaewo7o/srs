@@ -270,4 +270,19 @@ class QueryDslTest(
             foodStore.rate.goe(rate)
         }
     }
+
+    @Test
+    fun `집합쿼리`() {
+        // given, when
+        val fetch = query
+            .select(
+                foodStore.rate.max().`as`("max"),
+                foodStore.rate.sum().`as`("sum"),
+                foodStore.rate.avg().`as`("avg")
+            )
+            .from(foodStore)
+            .fetch()
+
+        fetch.forEach { println(it) }
+    }
 }
