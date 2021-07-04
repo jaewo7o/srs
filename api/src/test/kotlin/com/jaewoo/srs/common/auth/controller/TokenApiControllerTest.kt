@@ -8,6 +8,7 @@ import com.jaewoo.srs.core.security.jwt.JwtTokenProvider
 import com.jaewoo.srs.core.security.properties.SecurityProperties
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.post
+import org.springframework.transaction.annotation.Transactional
 
 internal class TokenApiControllerTest(
     private val cacheSessionService: CacheSessionService,
@@ -18,6 +19,7 @@ internal class TokenApiControllerTest(
     val baseUrl = "/api/reissue-token"
 
     @Test
+    @Transactional
     fun `Access Token 재발행 성공 케이스`() {
         // given
         // 로그인사용자 Session 생성
@@ -40,6 +42,7 @@ internal class TokenApiControllerTest(
     }
 
     @Test
+    @Transactional
     fun `Access Token 재발행 실패 케이스`() {
         // given
         // 로그인사용자 Session 생성

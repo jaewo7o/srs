@@ -2,10 +2,11 @@ package com.jaewoo.srs.common.message.domain.dto
 
 import com.jaewoo.srs.common.message.domain.entity.Message
 import com.jaewoo.srs.common.message.domain.enum.MessageType
+import com.querydsl.core.annotations.QueryProjection
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import io.swagger.annotations.ApiParam
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -66,7 +67,7 @@ data class SearchMessageRequest(
 )
 
 @ApiModel(value = "다국어메시지 검색결과")
-data class SearchMessageResponse(
+data class SearchMessageResponse @QueryProjection constructor(
     @ApiModelProperty(value = "다국어ID", example = "1")
     val id: Long,
 
@@ -74,7 +75,7 @@ data class SearchMessageResponse(
     val key: String,
 
     @ApiModelProperty(value = "메시지유형", example = "TERM")
-    val messageType: MessageType,
+    val messageType: String,
 
     @ApiModelProperty(value = "국문", example = "추가")
     val contentsKo: String,
@@ -86,5 +87,5 @@ data class SearchMessageResponse(
     val updatedUserName: String,
 
     @ApiModelProperty(value = "최근수정일시")
-    val updatedAt: ZonedDateTime
+    val updatedAt: LocalDateTime
 )

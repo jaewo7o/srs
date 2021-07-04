@@ -1,8 +1,6 @@
 package com.jaewoo.srs.common.message.service
 
-import com.jaewoo.srs.common.message.dao.MessagePredicator
 import com.jaewoo.srs.common.message.dao.MessageRepository
-import com.jaewoo.srs.common.message.dao.MessageRepositorySupport
 import com.jaewoo.srs.common.message.domain.dto.CreateMessageRequest
 import com.jaewoo.srs.common.message.domain.dto.SearchMessageRequest
 import com.jaewoo.srs.common.message.domain.dto.SearchMessageResponse
@@ -17,8 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MessageService(
-    val messageRepository: MessageRepository,
-    val messageRepositorySupport: MessageRepositorySupport
+    val messageRepository: MessageRepository
 ) {
     @Transactional
     fun createMessage(dto: CreateMessageRequest): Message {
@@ -54,12 +51,7 @@ class MessageService(
     }
 
     fun searchMessage(dto: SearchMessageRequest, pageable: Pageable): Page<SearchMessageResponse> {
-        val predicate = MessagePredicator()
-            .key(dto.key)
-            .contents(dto.contents)
-            .value()
-
-        return messageRepositorySupport.findAllPage(predicate, pageable)
+        return messageRepository.findAllPage(dto, pageable)
     }
 
     @Transactional

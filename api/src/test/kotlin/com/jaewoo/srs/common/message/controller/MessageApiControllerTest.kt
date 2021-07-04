@@ -22,6 +22,7 @@ internal class MessageApiControllerTest(
     val baseUrl = "/api/messages"
 
     @Test
+    @Transactional
     fun `메시지 생성`() {
         // given
         val dto = CreateMessageRequest(

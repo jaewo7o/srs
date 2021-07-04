@@ -1,17 +1,19 @@
 package com.jaewoo.srs
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.jaewoo.srs.common.auth.domain.vo.SessionUser
+import com.jaewoo.srs.app.user.domain.entity.User
 import com.jaewoo.srs.core.context.SrsContext
 import com.querydsl.jpa.impl.JPAQueryFactory
-import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
+import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 
+@Transactional
 @ActiveProfiles("test")
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -45,21 +47,18 @@ class SpringTestSupport {
         entityManager.clear()
     }
 
-    companion object {
-        @BeforeAll
-        @JvmStatic
-        fun initSession() {
-            var sessionUser = SessionUser(
-                0L,
-                name = "Jung Jaewoo",
-                mobileNo = "010-9910-2227",
-                languageCode = "ko",
-                timezoneName = "America/Los_Angeles",
-                loginId = "jeawoo.jeong@gmail.com",
-                password = ""
-            )
+    @BeforeEach
+    fun initSession() {
+        val user = User(
+            name = "Jaewoo Jung",
+            mobileNo = "010-9910-9999",
+            languageCode = "ko",
+            timezoneName = "America/Los_Angeles",
+            loginId = "jeawoo.jeong@gmail.com",
+            password = "XXXXX"
+        )
 
-            SrsContext.setCurrentUser(sessionUser)
-        }
+        val saveUser = save(user)
+        SrsContext.setCurrentUser(saveUser.toSessionUser())
     }
 }
