@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.NotBlank
 
-@ApiModel(value = "코드 생성요청")
+@ApiModel(description = "코드 생성요청")
 data class CreateCodeRequest(
     @ApiModelProperty(value = "코드", required = true, example = "A")
     @field:NotBlank
@@ -33,7 +33,7 @@ data class CreateCodeRequest(
     )
 }
 
-@ApiModel(value = "코드 수정요청")
+@ApiModel(description = "코드 수정요청")
 data class UpdateCodeRequest(
     @ApiModelProperty(value = "코드 한글명", required = true, example = "메시지분류")
     @field:NotBlank
@@ -52,7 +52,7 @@ data class UpdateCodeRequest(
     val code: String = ""
 }
 
-@ApiModel(value = "코드 조회 결과")
+@ApiModel(description = "코드 검색 결과")
 data class SearchCodeResponse(
     @ApiModelProperty(value = "그룹코드")
     var groupCode: String = "",

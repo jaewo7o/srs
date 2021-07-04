@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
-@ApiModel(value = "다국어메시지 생성")
+@ApiModel(description = "다국어메시지 생성")
 data class CreateMessageRequest(
     @ApiModelProperty(value = "다국어키", example = "add")
     @field:NotBlank
@@ -36,7 +36,7 @@ data class CreateMessageRequest(
     )
 }
 
-@ApiModel(value = "다국어메시지 수정")
+@ApiModel(description = "다국어메시지 수정")
 data class UpdateMessageRequest(
     @ApiModelProperty(value = "다국어키", required = true, example = "add")
     @field:NotBlank
@@ -58,7 +58,7 @@ data class UpdateMessageRequest(
     var id: Long = 0
 }
 
-@ApiModel(value = "다국어메시지 검색")
+@ApiModel(description = "다국어메시지 검색요청")
 data class SearchMessageRequest(
     @ApiParam(value = "다국어키")
     var key: String?,
@@ -66,7 +66,7 @@ data class SearchMessageRequest(
     var contents: String?
 )
 
-@ApiModel(value = "다국어메시지 검색결과")
+@ApiModel(description = "다국어메시지 검색결과")
 data class SearchMessageResponse @QueryProjection constructor(
     @ApiModelProperty(value = "다국어ID", example = "1")
     val id: Long,

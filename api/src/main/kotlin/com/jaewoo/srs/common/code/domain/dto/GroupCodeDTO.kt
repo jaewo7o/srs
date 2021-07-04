@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty
 import io.swagger.annotations.ApiParam
 import javax.validation.constraints.NotBlank
 
-@ApiModel(value = "그룹코드 생성요청")
+@ApiModel(description = "그룹코드 생성요청")
 data class CreateGroupCodeRequest(
     @ApiModelProperty(value = "그룹코드", required = true, example = "CM001")
     @field:NotBlank
@@ -26,7 +26,7 @@ data class CreateGroupCodeRequest(
     )
 }
 
-@ApiModel(value = "그룹코드 수정요청")
+@ApiModel(description = "그룹코드 수정요청")
 data class UpdateGroupCodeRequest(
     @ApiModelProperty(value = "그룹코드 한글명", required = true, example = "메시지분류")
     @field:NotBlank
@@ -36,7 +36,7 @@ data class UpdateGroupCodeRequest(
     val groupCodeNameEn: String
 )
 
-@ApiModel(value = "그룹코드 검색")
+@ApiModel(description = "그룹코드 검색")
 data class SearchGroupCodeRequest(
     @ApiParam(value = "검색어")
     var name: String?

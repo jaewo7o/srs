@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.NotBlank
 
-@ApiModel(value = "사용자생성요청")
+@ApiModel(description = "사용자생성요청")
 data class CreateUserRequest(
     @ApiModelProperty(value = "사용자명", required = true, example = "정재우")
     @field:NotBlank
@@ -38,7 +38,7 @@ data class CreateUserRequest(
     )
 }
 
-@ApiModel(value = "사용자수정요청")
+@ApiModel(description = "사용자수정요청")
 data class UpdateUserRequest(
     @ApiModelProperty(value = "사용자명", required = true, example = "정재우")
     @field:NotBlank

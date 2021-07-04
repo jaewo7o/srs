@@ -88,7 +88,7 @@ class SwaggerConfig(
             ).build()
     }
 
-    @ApiModel
+    @ApiModel(description = "페이지 요청")
     class Page(
         @ApiModelProperty(value = "페이지 번호(0..N)")
         val page: Int,
