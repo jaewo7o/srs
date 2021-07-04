@@ -7,8 +7,8 @@ spring:
         host: ${REDIS_HOST}
         port: ${REDIS_PORT}
     datasource:
-        driver-class-name: org.mariadb.jdbc.Driver
-        url: jdbc:mariadb://${DB_HOST}:${DB_PORT}/${DB_DATABASE}
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        url: jdbc:log4jdbc:mariadb://${DB_HOST}:${DB_PORT}/${DB_DATABASE}
         username: ${DB_USERNAME}
         password: ${DB_PASSWORD}
         sql-script-encoding: UTF-8

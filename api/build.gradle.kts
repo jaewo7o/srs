@@ -96,9 +96,7 @@ dependencies {
 
     // logging
     implementation("io.github.microutils:kotlin-logging-jvm:2.0.6")
-
-    // p6spy:p6spy
-    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.2")
+    implementation("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16")
 
     // mariadb
     implementation("org.mariadb.jdbc:mariadb-java-client:2.4.1")
