@@ -22,8 +22,8 @@ import java.time.YearMonth
 
 @Configuration
 class SwaggerConfig(
-    private val securityProperties: SecurityProperties,
-    private val typeResolver: TypeResolver
+    val securityProperties: SecurityProperties,
+    val typeResolver: TypeResolver
 ) {
     @Bean
     fun swagger(): Docket {
