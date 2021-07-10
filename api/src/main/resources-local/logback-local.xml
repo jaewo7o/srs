@@ -32,7 +32,7 @@
     <logger name="com.jaewoo.srs" level="DEBUG"/>
 
     <!-- INFO 레벨 이하 로그는 TEXT_FILE 어펜더로 로그 적재 -->
-    <root level="TRACE">
+    <root level="DEBUG">
         <appender-ref ref="TEXT_CONSOLE"/>
     </root>
 
