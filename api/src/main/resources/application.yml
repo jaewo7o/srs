@@ -6,6 +6,12 @@ spring:
         database-platform: org.hibernate.dialect.MariaDB103Dialect
         hibernate:
             ddl-auto: create
+        properties:
+            hibernate:
+                jdbc:
+                    batch_size: 200
+                order_inserts: true
+                order_updates: true
     output:
         ansi:
             enabled: always
