@@ -5,7 +5,6 @@ import com.jaewoo.srs.common.message.domain.dto.QSearchMessageResponse
 import com.jaewoo.srs.common.message.domain.dto.SearchMessageRequest
 import com.jaewoo.srs.common.message.domain.dto.SearchMessageResponse
 import com.jaewoo.srs.common.message.domain.entity.QMessage.message
-import com.jaewoo.srs.core.context.SrsContext
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.core.types.dsl.Expressions
 import com.querydsl.jpa.impl.JPAQueryFactory
@@ -22,7 +21,7 @@ interface MessageDao {
 class MessageDaoImpl(val query: JPAQueryFactory) : MessageDao {
 
     override fun findAllPage(dto: SearchMessageRequest, pageable: Pageable): Page<SearchMessageResponse> {
-        val currentUser = SrsContext.getCurrentUser()
+        //val currentUser = SrsContext.getCurrentUser()
 
         val queryResults = query
             .select(

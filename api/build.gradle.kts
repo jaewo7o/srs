@@ -26,6 +26,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 val jjwtVersion = "0.10.7"
 val swaggerVersion = "3.0.0"
 val queryDslVersion = "4.2.1"
+val cxfVersion = "3.4.0"
 
 repositories {
     mavenCentral()
@@ -62,6 +63,11 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    // Apache CXF
+    implementation("org.apache.cxf:cxf-spring-boot-starter-jaxws:$cxfVersion")
+    implementation("org.apache.cxf:cxf-rt-transports-http-jetty:$cxfVersion")
+    implementation("org.apache.cxf:cxf-rt-features-logging:$cxfVersion")
 
     // jackson library
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
