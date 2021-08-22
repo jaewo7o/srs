@@ -1,4 +1,4 @@
-package com.jaewoo.srs.core.enum
+package com.jaewoo.srs.core.enumerate
 
 import javax.persistence.AttributeConverter
 import javax.persistence.Converter

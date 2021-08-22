@@ -1,7 +1,7 @@
 package com.jaewoo.srs.common.message.domain.enum
 
 import com.fasterxml.jackson.annotation.JsonValue
-import com.jaewoo.srs.core.enum.BaseEnum
+import com.jaewoo.srs.core.enumerate.BaseEnum
 
 enum class MessageType(
     private val code: String,

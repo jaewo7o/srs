@@ -1,4 +1,4 @@
-package com.jaewoo.srs.core.enum
+package com.jaewoo.srs.core.enumerate
 
 interface BaseEnum {
     fun getCode(): String

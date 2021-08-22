@@ -3,8 +3,11 @@ package com.jaewoo.srs.core.config
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.*
+import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.jaewoo.srs.core.enumerate.BaseEnum
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -35,22 +38,33 @@ class JacksonConfig {
         javaTimeModule.addDeserializer(LocalDate::class.java, LocalDateDeserializer())
         javaTimeModule.addDeserializer(LocalDateTime::class.java, LocalDateTimeDeserializer())
 
-        //val simpleModule = SimpleModule()
-        //simpleModule.addSerializer(BaseEnum::class.java, BaseEnumSerializer())
-        //simpleModule.addDeserializer(BaseEnum::class.java, BaseEnumDeserializer())
+        val simpleModule = SimpleModule()
+        simpleModule.addSerializer(BaseEnum::class.java, BaseEnumSerializer())
+        simpleModule.setDeserializerModifier(EnumDeserializerModifier())
 
         objectMapper.registerModule(javaTimeModule)
-//        objectMapper.registerModule(simpleModule)
+        objectMapper.registerModule(simpleModule)
         objectMapper.registerModule(KotlinModule())
 
         return objectMapper
     }
 
-//    class BaseEnumSerializer : JsonSerializer<BaseEnum>() {
-//        override fun serialize(value: BaseEnum, gen: JsonGenerator?, p2: SerializerProvider?) {
-//            gen!!.writeString(value.getCode())
-//        }
-//    }
+    class EnumDeserializerModifier : BeanDeserializerModifier() {
+        override fun modifyEnumDeserializer(
+            config: DeserializationConfig?,
+            type: JavaType,
+            beanDesc: BeanDescription?,
+            deserializer: JsonDeserializer<*>?
+        ): JsonDeserializer<*> {
+            return super.modifyEnumDeserializer(config, type, beanDesc, deserializer)
+        }
+    }
+
+    class BaseEnumSerializer : JsonSerializer<BaseEnum>() {
+        override fun serialize(value: BaseEnum, gen: JsonGenerator?, p2: SerializerProvider?) {
+            gen!!.writeString(value.getCode())
+        }
+    }
 
     class LocalDateSerializer : JsonSerializer<LocalDate>() {
         override fun serialize(value: LocalDate, gen: JsonGenerator?, p2: SerializerProvider?) {
@@ -83,11 +97,5 @@ class JacksonConfig {
             return LocalDateTime.parse(parser.valueAsString, DATETIME_FORMAT)
         }
     }
-
-//    class BaseEnumDeserializer : JsonDeserializer<EnumClass<out BaseEnum>>() {
-//        //    override fun deserialize(parser: JsonParser, p1: DeserializationContext?): BaseEnum {
-//        //      return Enum.
-//        // }
-//    }
 
 }
