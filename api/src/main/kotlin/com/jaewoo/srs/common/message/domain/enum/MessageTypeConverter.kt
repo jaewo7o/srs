@@ -5,4 +5,5 @@ import javax.persistence.Converter
 
 @Converter
 class MessageTypeConverter : SrsAttributeConverter<MessageType>() {
+    override fun getValues() = MessageType.values()
 }

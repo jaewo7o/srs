@@ -1,22 +1,25 @@
 package com.jaewoo.srs.core.enumerate
 
+import com.jaewoo.srs.core.exception.SrsDataNotFoundException
+import java.util.*
 import javax.persistence.AttributeConverter
 import javax.persistence.Converter
 
 @Converter
 abstract class SrsAttributeConverter<E : BaseEnum> : AttributeConverter<E, String> {
 
-    val enumClass: Class<E> = TODO()
+    protected abstract fun getValues(): Array<E>
 
     override fun convertToEntityAttribute(dbData: String): E {
-        return enumClass.enumConstants.first { dbData.equals(it.getCode()) }
+        return Arrays.stream(getValues())
+            .filter {
+                dbData.equals(it.getCode())
+            }
+            .findFirst()
+            .orElseThrow { SrsDataNotFoundException() }
     }
 
     override fun convertToDatabaseColumn(attribute: E?): String {
-        if (attribute == null) {
-            return ""
-        }
-
-        return attribute?.getCode()
+        return attribute?.getCode() ?: ""
     }
 }
