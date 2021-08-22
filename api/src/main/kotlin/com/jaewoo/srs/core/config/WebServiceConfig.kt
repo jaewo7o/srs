@@ -21,15 +21,4 @@ class WebServiceConfig(
         endpoint.publish("/hello")
         return endpoint
     }
-
-//    @Bean(name = ["client"])
-//    fun generateProxy() = proxyFactoryBean().create()
-//
-//    @Bean
-//    fun proxyFactoryBean(): JaxWsProxyFactoryBean {
-//        val proxyFactory = JaxWsProxyFactoryBean()
-//        proxyFactory.serviceClass = HelloWs::class.java
-//        proxyFactory.address = "http://localhost:8080/services/hello"
-//        return proxyFactory
-//    }
 }

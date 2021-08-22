@@ -43,7 +43,10 @@ class SecurityConfig(
             .and()
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+            // 인증 예외처리
             .antMatchers("/*/signin", "/api/reissue-token", "/api/anonymous/**").permitAll()
+            // Soap Webservice 예외처리
+            .antMatchers("/services/**").permitAll()
             // swagger 예외처리
             .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
             .antMatchers("/api/**").authenticated()

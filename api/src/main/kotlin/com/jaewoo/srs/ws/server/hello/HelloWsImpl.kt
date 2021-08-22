@@ -7,11 +7,11 @@ class HelloWsImpl : HelloWs {
 
     val counter: Int = 0
     override fun hello(name: String): String {
-        return "Hello ${name}!!"
+        return "Hello $name!!"
     }
 
     override fun register(student: Student): String {
         counter.inc()
-        return "${student.name} is registered student number ${counter}"
+        return "${student.name} is registered student number $counter"
     }
 }
