@@ -19,7 +19,7 @@ internal class MessageApiControllerTest(
     val messageRepository: MessageRepository
 ) : SpringWebTestSupport() {
 
-    val baseUrl = "/api/messages"
+    val baseUrl = "/api/anonymous/messages"
 
     @Test
     @Transactional

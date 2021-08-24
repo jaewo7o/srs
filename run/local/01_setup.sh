@@ -4,6 +4,12 @@ docker network create srs-network
 #echo $dirname
 
 docker run -d --rm \
+      --name redis \
+      -p 6379:6379 \
+      --network srs-network \
+      redis
+
+docker run -d --rm \
       --name maria \
       --net srs-network \
       -p 3306:3306 \

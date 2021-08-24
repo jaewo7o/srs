@@ -19,7 +19,7 @@ import javax.validation.constraints.NotBlank
     description = "다국어메시지관리"
 )
 @RestController
-@RequestMapping("/api/messages")
+@RequestMapping(path = ["/api/messages", "/api/anonymous/messages"])
 class MessageApiController(
     val messageService: MessageService
 ) {
