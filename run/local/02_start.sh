@@ -1,5 +1,5 @@
-cd ../..
+cd ../../api
 
-./api/gradlew clean build
+./gradlew clean build -x test
 
-java -jar ./api/build/libs/srs-api-0.0.6-SNAPSHOT.jar &
+java -jar ./build/libs/srs-api-0.0.6-SNAPSHOT.jar &
