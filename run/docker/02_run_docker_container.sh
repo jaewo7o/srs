@@ -1,8 +1,5 @@
 docker network create srs-network
 
-#dirname=${PWD##*/}
-#echo $dirname
-
 docker run -d --rm \
       --name redis \
       -p 6379:6379 \
@@ -31,3 +28,16 @@ docker run -d --rm \
       -p 27017:27017 \
       -v ~/dev/workspace/srs/data/mongo/:/data/db \
       mongo
+
+docker run -d --rm --name srs-api \
+      --network srs-network \
+      -p 8080:8080 \
+      -e SPRING_PROFILES_ACTIVE=dev \
+      -e DB_HOST=mariadb \
+      -e DB_PORT=3306 \
+      -e DB_DATABASE=srs \
+      -e DB_USERNAME=srs \
+      -e DB_PASSWORD=srs123!! \
+      -e REDIS_HOST=redis \
+      -e REDIS_PORT=6379 \
+      srs-api
