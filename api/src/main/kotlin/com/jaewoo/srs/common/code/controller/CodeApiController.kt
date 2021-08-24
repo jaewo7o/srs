@@ -19,28 +19,40 @@ class CodeApiController(
     private val groupCodeService: GroupCodeService,
     private val codeService: CodeService
 ) {
+
+    companion object {
+        const val baseUrl = "/api/group-codes"
+        const val aBaseUrl = "/api/anonymous/group-codes"
+    }
+
     @ApiOperation(value = "코드그룹 검색")
-    @GetMapping("/api/group-codes")
+    @GetMapping(value = [aBaseUrl, baseUrl])
     fun searchGroupCodesPageable(dto: SearchGroupCodeRequest, pageable: Pageable) =
         groupCodeService.searchGroupCodesPageable(dto, pageable)
 
     @ApiOperation(value = "코드그룹 단건 조회")
-    @GetMapping("/api/group-codes/{groupCode}")
+    @GetMapping(value = ["$aBaseUrl/{groupCode}", "$baseUrl/{groupCode}"])
     fun getGroupCode(@PathVariable groupCode: String) = groupCodeService.getGroupCode(groupCode)
 
     @ApiOperation(value = "코드그룹 단건 수정")
-    @PutMapping("/api/group-codes/{groupCode}")
+    @PutMapping(value = ["$aBaseUrl/{groupCode}", "$baseUrl/{groupCode}"])
     fun updateGroupCode(@PathVariable groupCode: String, @RequestBody dto: UpdateGroupCodeRequest) =
         groupCodeService.updateGroupCode(groupCode, dto)
 
     @ApiOperation(value = "코드그룹 신규 생성")
-    @PostMapping("/api/group-codes")
+    @PostMapping(value = [aBaseUrl, baseUrl])
     fun createGroupCode(@Valid @RequestBody dto: CreateGroupCodeRequest) {
         groupCodeService.createGroupCode(dto)
     }
 
+    @ApiOperation(value = "코드그룹 삭제")
+    @DeleteMapping(value = ["$aBaseUrl/{groupCode}", "$baseUrl/{groupCode}"])
+    fun deleteGroupCode(@PathVariable groupCode: String) {
+        groupCodeService.deleteGroupCode(groupCode)
+    }
+
     @ApiOperation(value = "코드 목록 조회")
-    @GetMapping("/api/group-codes/{groupCode}/codes")
+    @GetMapping(value = ["$aBaseUrl/{groupCode}/codes", "$baseUrl/{groupCode}/codes"])
     fun getCode(@PathVariable groupCode: String) = codeService.getCodes(groupCode).map {
         SearchCodeResponse(
             groupCode = it.groupCode,
@@ -52,16 +64,16 @@ class CodeApiController(
     }
 
     @ApiOperation(value = "코드 단건 조회")
-    @GetMapping("/api/group-codes/{groupCode}/codes/{code}")
+    @GetMapping(value = ["$aBaseUrl/{groupCode}/codes/{code}", "$baseUrl/{groupCode}/codes/{code}"])
     fun getCode(@PathVariable groupCode: String, @PathVariable code: String) = codeService.getCode(groupCode, code)
 
     @ApiOperation(value = "코드 단건 수정")
-    @PutMapping("/api/group-codes/{groupCode}/codes/{code}")
+    @PutMapping(value = ["$aBaseUrl/{groupCode}/codes/{code}", "$baseUrl/{groupCode}/codes/{code}"])
     fun updateCode(@PathVariable groupCode: String, @PathVariable code: String, @RequestBody dto: UpdateCodeRequest) =
         codeService.updateCode(groupCode, code, dto)
 
     @ApiOperation(value = "코드 신규 생성")
-    @PostMapping("/api/group-codes/{groupCode}/codes")
+    @PostMapping(value = ["$aBaseUrl/{groupCode}/codes", "$baseUrl/{groupCode}/codes"])
     fun createCode(
         @PathVariable groupCode: String,
         @Valid @RequestBody dto: CreateCodeRequest

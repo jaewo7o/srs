@@ -24,7 +24,7 @@ internal class CodeApiControllerTest(
     private val codeRepository: CodeRepository
 ) : SpringWebTestSupport() {
 
-    val baseUrl = "/api/group-codes"
+    val baseUrl = "/api/anonymous/group-codes"
 
     @Test
     @Transactional

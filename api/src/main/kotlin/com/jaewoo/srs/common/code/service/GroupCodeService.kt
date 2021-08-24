@@ -45,4 +45,8 @@ class GroupCodeService(
 
         return groupCodeRepository.save(dto.toEntity())
     }
+
+    fun deleteGroupCode(groupCode: String) {
+        groupCodeRepository.deleteById(groupCode)
+    }
 }

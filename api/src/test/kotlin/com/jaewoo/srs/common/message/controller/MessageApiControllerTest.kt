@@ -115,7 +115,7 @@ internal class MessageApiControllerTest(
 
     @Test
     @Transactional
-    fun `메시지 목록 조회 - 페이징`() {
+    fun `메시지 목록 조회 - 조건 있는 경우 페이징`() {
         // given
         (1..10).map {
             buildMessage(contentsKo = "message$it")
@@ -137,6 +137,31 @@ internal class MessageApiControllerTest(
             jsonPath("$..size") { value(pageSize) }
             jsonPath("$..number") { value(pageNumber) }
             jsonPath("$..numberOfElements") { value(1) }
+        }.andDo { print() }
+    }
+
+    @Test
+    @Transactional
+    fun `메시지 목록 조회 - 조건 없는 경우 페이징`() {
+        // given
+        (1..10).map {
+            buildMessage(contentsKo = "message$it")
+        }.also {
+            saveAll(it)
+        }
+
+        val pageSize = 5
+        val pageNumber = 0
+
+        // when & then
+        mockMvc.get(baseUrl) {
+            param("page", pageNumber.toString())
+            param("size", pageSize.toString())
+        }.andExpect {
+            status { isOk() }
+            jsonPath("$..size") { value(pageSize) }
+            jsonPath("$..number") { value(pageNumber) }
+            jsonPath("$..numberOfElements") { value(pageSize) }
         }.andDo { print() }
     }
 }
